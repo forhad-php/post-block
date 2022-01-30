@@ -1,7 +1,7 @@
-=== Post Block ===
+=== Gutenberg WordPress Post Grid Block ===
 Contributors: frohadpro
 Donate link: https://forhad.net/donate/
-Tags: post, block
+Tags: custom post grid, display posts, gutenberg blocks, popular posts, post grid
 Requires at least: 4.5
 Tested up to: 5.8.2
 Stable tag: 1.2.0
@@ -12,8 +12,31 @@ The plugin to display posts as block grid system.
 
 == Description ==
 
-This plugin only working on WordPress Gutenberg block mode.
-The block shows posts as a grid system.
+= What is a Gutenberg block? =
+In WordPress' new block editor, aka Gutenberg, editor blocks allow content to be arranged in different ways. Gutenberg WordPress is the future.
+
+= How do I use Gutenberg post blocks? =
+There are many basic content blocks available in WordPress, including a paragraph, an image, a button, a list, and more. But this plugin gives you a custom fancy blog layout in your WordPress. All you need to do is just stay on Block editor mode, not the Classic editor.
+
+= Post Grid System =
+This block provides stunning options to showcase your posts anywhere on the Gutenberg block mode. It provides taxonomy controls to choose categories. It also offers predefined controls for every part of the post like Featured Image, Excerpt, author etc.
+
+= Key Features =
+- Option to choose pre designed template.
+- Mximum width of the block.
+- Number of post columns.
+- Post per page view.
+- Spacing of column and row gap.
+- Excerpt size.
+- Advanced query system.
+- Exact thumbnail size.
+- Content visibility.
+- Post read more button.
+- Pagination.
+- Post love react.
+- Popular posts with view count.
+- Advanced color picker with color palette from your theme.
+- And more..
 
 
 == Installation ==
@@ -53,6 +76,7 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 * Fix: Color picker not working.
 
 = 1.2.0 =
-* Add: New Layout.
+* Add: New Layout (Grid 2).
+* Add: Thumbnail size option.
 * Fix: Maximum width of the block not working.
 * Fix: Column Gap not saving the value.
