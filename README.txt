@@ -4,7 +4,7 @@ Donate link: https://forhad.net/donate/
 Tags: custom post grid, display posts, gutenberg blocks, popular posts, post grid
 Requires at least: 4.5
 Tested up to: 5.8.2
-Stable tag: 1.2.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,3 +80,9 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 * Add: Thumbnail size option.
 * Fix: Maximum width of the block not working.
 * Fix: Column Gap not saving the value.
+
+= 2.0.0 =
+* Add: New style component.
+* Fix: Pagination overflow.
+* Fix: Post meta broken.
+* Fix: Author link not working.

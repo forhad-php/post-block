@@ -103,6 +103,9 @@
     flex-direction: row;
     column-gap: 20px;
     text-transform: capitalize;
+}
+.frhd__post-meta,
+.frhd__post-meta a {
     color: #424242;
 }
 .frhd__article-body {

@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: Forhad
  * Author URI: https://www.forhad.net
- * Version: 1.2.0
+ * Version: 2.0.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,8 +28,14 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '1.2.0' );
+define( 'POST_BLOCK_VERSION', '2.0.0' );
 
+/**
+ * Get Block Posts Attributes.
+ *
+ * @param Mixed $attributes Get attributes from block settings.
+ * @return HTML
+ */
 function frhd_render_block_core( $attributes ) {
 
 	// Get attributes value from editor page.
@@ -101,21 +107,17 @@ function frhd_render_block_core( $attributes ) {
 		switch ( $frhd_post_layout ) {
 
 			case 'grid1':
-				require_once plugin_dir_path( __FILE__ ) . 'layouts/post-grid-1.php';
+				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-1.php';
 				wp_enqueue_style( 'post-grid-1' );
 				break;
+
 			case 'grid2':
-				require_once plugin_dir_path( __FILE__ ) . 'layouts/post-grid-2.php';
+				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-2.php';
 				wp_enqueue_style( 'post-grid-2' );
 				break;
 		}
 
-		/* END HTML OUTPUT */
-		$frhd_output = ob_get_contents(); // Collect output.
-
-		ob_end_clean(); // Turn off ouput buffer.
-
-		return $frhd_output; // Print output.
+		return ob_get_clean(); // Turn off ouput buffer and print output.
 
 	} else {
 

@@ -10,9 +10,8 @@
  */
 
 ?>
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
 
-<style>.frhd__post-block-main {max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}.frhd__post-block-wrap {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}.frhd__post-grid-1.frhd__post-block-main{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}.frhd__post-title a{color: <?php echo esc_attr( $post_title_color ); ?>;}.frhd__post-block-wrap{background-color: <?php echo esc_attr( $post_body_color ); ?>;}span.frhd__cat-name a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>;background-color: <?php echo esc_attr( $post_taxonomy_bg_color ); ?>;}.frhd__post-meta{color: <?php echo esc_attr( $posts_meta_color ); ?>;}.frhd__post-meta svg{fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}.frhd__post-excerpt p{color: <?php echo esc_attr( $post_desc_color ); ?>;}.frhd__post-btn a{background: <?php echo esc_attr( $post_btn_color ); ?>;}.frhd__post-btn a{color: <?php echo esc_attr( $post_btn_txt_color ); ?>;}.frhd__post-btn:hover a{color: <?php echo esc_attr( $post_btn_hover_txt_color ); ?>;}.frhd__post-btn:hover a{background-color: <?php echo esc_attr( $post_btn_hover_color ); ?>;}.frhd__reading-time{color: <?php echo esc_attr( $post_reading_time_color ); ?>;}.frhd__reading-time svg{fill: <?php echo esc_attr( $post_reading_time_icon_color ); ?>;}.frhd__paginate .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}.frhd__paginate .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}</style>
+<style>.frhd__post-block-main {max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}.frhd__post-block-wrap {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}.frhd__post-grid-1.frhd__post-block-main{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}.frhd__post-title a{color: <?php echo esc_attr( $post_title_color ); ?>;}.frhd__post-block-wrap{background-color: <?php echo esc_attr( $post_body_color ); ?>;}span.frhd__cat-name a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>;background-color: <?php echo esc_attr( $post_taxonomy_bg_color ); ?>;}.frhd__post-meta, .frhd__post-meta a{color: <?php echo esc_attr( $posts_meta_color ); ?>;}.frhd__post-meta svg{fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}.frhd__post-excerpt p{color: <?php echo esc_attr( $post_desc_color ); ?>;}.frhd__post-btn a{background: <?php echo esc_attr( $post_btn_color ); ?>;}.frhd__post-btn a{color: <?php echo esc_attr( $post_btn_txt_color ); ?>;}.frhd__post-btn:hover a{color: <?php echo esc_attr( $post_btn_hover_txt_color ); ?>;}.frhd__post-btn:hover a{background-color: <?php echo esc_attr( $post_btn_hover_color ); ?>;}.frhd__reading-time{color: <?php echo esc_attr( $post_reading_time_color ); ?>;}.frhd__reading-time svg{fill: <?php echo esc_attr( $post_reading_time_icon_color ); ?>;}.frhd__paginate .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}.frhd__paginate .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}</style>
 <div class="frhd__post-block-main frhd__post-grid-1">
 	<?php
 	while ( $frhd_post_query->have_posts() ) {
@@ -26,15 +25,19 @@
 					<?php
 					if ( $post_thumb_show ) {
 
-						$frhd_thumb_id     = get_post_thumbnail_id( get_the_ID() );
-						$frhd_thumb_attach = wp_get_attachment_image_src( $frhd_thumb_id, $post_thumb_size );
-						$frhd_thumb_alt    = get_post_meta( $frhd_thumb_id, '_wp_attachment_image_alt', true );
-						if ( empty( $frhd_thumb_alt ) ) {
+						$frhd_thumb_id = get_post_thumbnail_id( get_the_ID() );
 
-							$frhd_thumb_alt = get_the_title();
+						if ( $frhd_thumb_id ) {
+
+							$frhd_thumb_attach = wp_get_attachment_image_src( $frhd_thumb_id, $post_thumb_size );
+							$frhd_thumb_alt    = get_post_meta( $frhd_thumb_id, '_wp_attachment_image_alt', true );
+							if ( empty( $frhd_thumb_alt ) ) {
+
+								$frhd_thumb_alt = get_the_title();
+							}
+
+							echo '<img width="' . esc_attr( $frhd_thumb_attach[1] ) . '" height="' . esc_attr( $frhd_thumb_attach[2] ) . '" src="' . esc_url( $frhd_thumb_attach[0] ) . '" alt="' . esc_attr( $frhd_thumb_alt ) . '" loading="lazy">';
 						}
-
-						echo '<img width="' . esc_attr( $frhd_thumb_attach[1] ) . '" height="' . esc_attr( $frhd_thumb_attach[2] ) . '" src="' . esc_url( $frhd_thumb_attach[0] ) . '" alt="' . esc_attr( $frhd_thumb_alt ) . '" loading="lazy">';
 					}
 
 					if ( $post_love_react ) {
@@ -68,7 +71,9 @@
 					<?php
 					if ( $post_author_show ) {
 
-						echo '<span class="frhd__post-author"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path></svg>' . esc_html( get_the_author() ) . '</span>';
+						echo '<span class="frhd__post-author"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path></svg>';
+						echo esc_url( the_author_posts_link() );
+						echo '</span>';
 					}
 
 					if ( $post_date_show ) {
@@ -85,7 +90,7 @@
 
 						$get_post_view_count   = get_post_meta( get_the_ID(), 'post_views_count', true );
 						$post_view_total_count = empty( $get_post_view_count ) ? 0 : $get_post_view_count;
-						echo '<span class="frhd__post-comment"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>' . esc_html( $post_view_total_count ) . '</span>';
+						echo '<span class="frhd__post-view"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>' . esc_html( $post_view_total_count ) . '</span>';
 					}
 					?>
 				</div>

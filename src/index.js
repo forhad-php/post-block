@@ -5,6 +5,7 @@ import { __experimentalHeading as Heading, __experimentalNumberControl as Number
 import ServerSideRender from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
+import Style from 'style-it';
 
 registerBlockType( 'gutenberg-post-view/post-block', {
 	title: __( 'Post Block' ),
@@ -126,37 +127,48 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			default: 'medium'
 		},
 		hasPostThumb: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostTitle: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostAuthor: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostDate: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostComment: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostTaxonomy: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostExcerpt: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostbtn: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasPostPagin: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasViewCount: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'true'
 		},
 		hasLoveReact: {
-			type: 'boolean'
+			type: 'boolean',
+			default: 'false'
 		},
 	},
 
@@ -470,6 +482,11 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 								? 'Show Love React.'
 								: 'Hide Love React.'
 						}
+						help={
+							hasLoveReact
+								? 'Go to Dashboard Settings > Post Block Options > Check Heart React and Save Changes.'
+								: ''
+						}			
 						checked={ hasLoveReact }
 						onChange={ setLoveReact }
 					/>
@@ -480,16 +497,16 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					icon="admin-appearance"
 					initialOpen={ false }
 					className={ 'frhd__color-picker' }>
-					<strong>{ __( "Post Title Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postTitleColor }} ></span></strong>
-					<ColorPalette
-						value={ postTitleColor }
-						onChange={ ( colorValue ) => setAttributes( { postTitleColor: colorValue } )}
-						/>
-
 					<strong>{ __( "Posts Body Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postBodyColor }} ></span></strong>
 					<ColorPalette
 						value={ postBodyColor }
 						onChange={ ( colorValue ) => setAttributes( { postBodyColor: colorValue } )}
+						/>
+
+					<strong>{ __( "Post Title Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postTitleColor }} ></span></strong>
+					<ColorPalette
+						value={ postTitleColor }
+						onChange={ ( colorValue ) => setAttributes( { postTitleColor: colorValue } )}
 						/>
 					
 					<strong>{ __( "Posts Taxonomy Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyColor }} ></span></strong>
@@ -591,10 +608,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 				</PanelBody>
 			</InspectorControls>,
 
-			// Posts direct show from 'render_callback' on the editor.
 			<div { ...useBlockProps() }>
-            <ServerSideRender
-                block={ "gutenberg-post-view/post-block" } />
+				<Style>{`div.frhd__post-block-main{max-width: ${maxWidth}px !important;}.frhd__post-block-wrap{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;}.frhd__post-block-main{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__post-title a {color: ${postTitleColor} !important;}.frhd__post-meta, .frhd__post-meta a {color: ${postMetaColor} !important;}.frhd__post-meta svg {fill: ${postMetaIconColor} !important;}.frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}span.frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__post-excerpt p {color: ${postDescColor} !important;}.frhd__post-btn{display: ${hasPostbtn ? 'block' : 'none'}}.frhd__post-btn a {color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__reading-time {color: ${readingTimeColor} !important;}.frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
+            	<ServerSideRender
+                	block={ "gutenberg-post-view/post-block" } />
 			</div>
 		]);
 	},
