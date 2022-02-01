@@ -14,6 +14,9 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 	category: 'text',
 	keywords: [ __( 'latest' ), __( 'posts' ), __( 'grid' ) ],
 	attributes: {
+		id: {
+            type: 'string',
+        },
 		postLayout: {
 			type: 'string',
 			default: 'grid1',
@@ -38,6 +41,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			type: 'string',
 			default: '#ffc107',
 		},
+		taxonomyPrecolor: {
+			type: 'string',
+			default: '#497898',
+		},
 		postTitleColor: {
 			type: 'string',
 			default: '#371f0e',
@@ -57,6 +64,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		postDescColor: {
 			type: 'string',
 			default: '#4b4f58',
+		},
+		postAuthorColor: {
+			type: 'string',
+			default: '#497898',
 		},
 		postBtnTextColor: {
 			type: 'string',
@@ -143,8 +154,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			default: 'true'
 		},
 		hasPostComment: {
-			type: 'boolean',
-			default: 'true'
+			type: 'boolean'
 		},
 		hasPostTaxonomy: {
 			type: 'boolean',
@@ -158,6 +168,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			type: 'boolean',
 			default: 'true'
 		},
+		hasReadTime: {
+			type: 'boolean',
+			default: 'true'
+		},
 		hasPostPagin: {
 			type: 'boolean',
 			default: 'true'
@@ -167,14 +181,14 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			default: 'true'
 		},
 		hasLoveReact: {
-			type: 'boolean',
-			default: 'false'
-		},
+			type: 'boolean'
+		}
 	},
 
-	edit({ attributes, setAttributes }) {
+	edit({ clientId, attributes, setAttributes }) {
 
 		const {
+			id,
 			postLayout,
 			maxWidth,
 			postCol,
@@ -184,6 +198,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			postDateBGColor,
 			postMetaIconColor,
 			postDescColor,
+			postAuthorColor,
 			postBtnTextColor,
 			postBtnColor,
 			hoverBtnTextColor,
@@ -209,12 +224,17 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			hasPostTaxonomy,
 			hasPostExcerpt,
 			hasPostbtn,
+			hasReadTime,
 			hasPostPagin,
 			hasViewCount,
 			hasLoveReact,
 			taxonomyColor,
-			taxonomyBGcolor
+			taxonomyBGcolor,
+			taxonomyPrecolor
 		} = attributes;
+
+		let blockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( clientId );
+		setAttributes({ id: blockIndex });
 
 		function onLayoutChange( newLayout ) {
 
@@ -261,6 +281,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		const setPostTaxonomy = () => setAttributes( { hasPostTaxonomy: ! hasPostTaxonomy } );
 		const setPostExcerpt = () => setAttributes( { hasPostExcerpt: ! hasPostExcerpt } );
 		const setPostbtn = () => setAttributes( { hasPostbtn: ! hasPostbtn } );
+		const setReadTime = () => setAttributes( { hasReadTime: ! hasReadTime } );
 		const setPostPagin = () => setAttributes( { hasPostPagin: ! hasPostPagin } );
 		const setViewCount = () => setAttributes( { hasViewCount: ! hasViewCount } );
 		const setLoveReact = () => setAttributes( { hasLoveReact: ! hasLoveReact } );
@@ -385,7 +406,6 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					icon={ 'format-aside' }
 					initialOpen={ false }
 					className={ 'frhd__content-visibility' }>
-					<Heading>To hide some part of your posts, you should turn on and vice versa for the first time.</Heading>
 					<ToggleControl
 						label={
 							hasPostThumb
@@ -469,6 +489,15 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					/>
 					<ToggleControl
 						label={
+							hasReadTime
+								? 'Show Reading Time.'
+								: 'Hide Reading Time.'
+						}
+						checked={ hasReadTime }
+						onChange={ setReadTime }
+					/>
+					<ToggleControl
+						label={
 							hasPostPagin
 								? 'Show Pagination.'
 								: 'Hide Pagination.'
@@ -515,10 +544,25 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ ( colorValue ) => setAttributes( { taxonomyColor: colorValue } )}
 						/>
 
-					<strong>{ __( "Taxonomy Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyBGcolor }} ></span></strong>
+					<strong className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Taxonomy Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyBGcolor }} ></span></strong>
 					<ColorPalette
 						value={ taxonomyBGcolor }
 						onChange={ ( colorValue ) => setAttributes( { taxonomyBGcolor: colorValue } )}
+						className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-show' }
+						/>
+
+					<strong className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }>{ __( "Taxonomy Prefix Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyPrecolor }} ></span></strong>
+					<ColorPalette
+						value={ taxonomyPrecolor }
+						onChange={ ( colorValue ) => setAttributes( { taxonomyPrecolor: colorValue } )}
+						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						/>
+
+					<strong className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }>{ __( "Author Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postAuthorColor }} ></span></strong>
+					<ColorPalette
+						value={ postAuthorColor }
+						onChange={ ( colorValue ) => setAttributes( { postAuthorColor: colorValue } )}
+						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
 						/>
 						
 					<strong>{ __( "Posts Meta Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postMetaColor }} ></span></strong>
@@ -609,9 +653,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			</InspectorControls>,
 
 			<div { ...useBlockProps() }>
-				<Style>{`div.frhd__post-block-main{max-width: ${maxWidth}px !important;}.frhd__post-block-wrap{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;}.frhd__post-block-main{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__post-title a {color: ${postTitleColor} !important;}.frhd__post-meta, .frhd__post-meta a {color: ${postMetaColor} !important;}.frhd__post-meta svg {fill: ${postMetaIconColor} !important;}.frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}span.frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__post-excerpt p {color: ${postDescColor} !important;}.frhd__post-btn{display: ${hasPostbtn ? 'block' : 'none'}}.frhd__post-btn a {color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__reading-time {color: ${readingTimeColor} !important;}.frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
+				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth}px !important;}.frhd__block-index-${id} .frhd__post-block-article{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;}.frhd__block-index-${id} .frhd__post-block-container{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {color: ${postTitleColor} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'}}.frhd__block-index-${id} .frhd__post-btn a {color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-block' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
             	<ServerSideRender
-                	block={ "gutenberg-post-view/post-block" } />
+                	block={ "gutenberg-post-view/post-block" }
+					className={ 'frhd__block-index-' + id } />
 			</div>
 		]);
 	},

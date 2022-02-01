@@ -41,3 +41,15 @@ span.frhd__cat-name a:hover {
 .frhd__post-btn a:hover {
     border-color: #fff;
 }
+.frhd__reading-time {
+    margin-right: 20px;
+    font-size: 14px;
+    color: #ef5350;
+}
+.frhd__reading-time svg {
+    width: 16px;
+    height: 16px;
+    margin-bottom: -4px;
+    margin-right: 5px;
+    fill: #d32f2f;
+}

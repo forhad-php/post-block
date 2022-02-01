@@ -1,4 +1,4 @@
-var elemHearts = document.getElementsByClassName("frhd__post-block-wrap");
+var elemHearts = document.getElementsByClassName("frhd__post-block-article");
 for (var i = 0; i < elemHearts.length; i++) {
 
     elemHearts[i].addEventListener('click', function() {

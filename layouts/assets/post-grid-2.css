@@ -45,12 +45,10 @@
     margin-bottom: 10px !important;
 }
 .frhd__post-grid-2 .frhd__cat-wrap,
-.frhd__post-grid-2 .frhd__post-author {
+.frhd__post-grid-2 .frhd__post-author,
+.frhd__post-grid-2 .frhd__post-author a {
     color: #497898;
 }
 .frhd__post-grid-2 .frhd__cat-wrap a {
     color: #ec398b;
-}
-.frhd__post-grid-2 .frhd__cat-wrap a:hover {
-    color: #3813c2
 }
