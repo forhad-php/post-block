@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, ColorPalette, useBlockProps } from '@wordpress/block-editor';
-import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl } from '@wordpress/components';
+import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
@@ -15,103 +15,107 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 	keywords: [ __( 'latest' ), __( 'posts' ), __( 'grid' ) ],
 	attributes: {
 		id: {
-            type: 'string',
+            type: 'string'
         },
 		postLayout: {
 			type: 'string',
-			default: 'grid1',
+			default: 'grid1'
 		},
 		maxWidth: {
 			type: 'string',
-			default: '1140',
+			default: '1140'
 		},
 		postCol: {
 			type: 'string',
-			default: '3',
+			default: '3'
 		},
 		postBodyColor: {
 			type: 'string',
-			default: '#f5f5f5',
+			default: '#f5f5f5'
 		},
 		taxonomyColor: {
 			type: 'string',
-			default: '#000000',
+			default: '#000000'
 		},
 		taxonomyBGcolor: {
 			type: 'string',
-			default: '#ffc107',
+			default: '#ffc107'
 		},
 		taxonomyPrecolor: {
 			type: 'string',
-			default: '#497898',
+			default: '#497898'
 		},
 		postTitleColor: {
 			type: 'string',
-			default: '#371f0e',
+			default: '#371f0e'
 		},
 		postMetaColor: {
 			type: 'string',
-			default: '#424242',
+			default: '#424242'
 		},
 		postDateBGColor: {
 			type: 'string',
-			default: '#ffc107',
+			default: '#ffc107'
 		},
 		postMetaIconColor: {
 			type: 'string',
-			default: '#424242',
+			default: '#424242'
 		},
 		postDescColor: {
 			type: 'string',
-			default: '#4b4f58',
+			default: '#4b4f58'
 		},
 		postAuthorColor: {
 			type: 'string',
-			default: '#497898',
+			default: '#497898'
 		},
 		postBtnTextColor: {
 			type: 'string',
-			default: '#ffffff',
+			default: '#ffffff'
 		},
 		postBtnColor: {
 			type: 'string',
-			default: '#d32f2f',
+			default: '#d32f2f'
 		},
 		hoverBtnTextColor: {
 			type: 'string',
-			default: '#ffffff',
+			default: '#ffffff'
 		},
 		hoverBtnColor: {
 			type: 'string',
-			default: '#ef5350',
+			default: '#ef5350'
 		},
 		readingTimeColor: {
 			type: 'string',
-			default: '#ef5350',
+			default: '#ef5350'
 		},
 		readingTimeIconColor: {
 			type: 'string',
-			default: '#d32f2f',
+			default: '#d32f2f'
 		},
 		paginationNumColor: {
 			type: 'string',
-			default: '#ffffff',
+			default: '#ffffff'
 		},
 		paginationBGColor: {
 			type: 'string',
-			default: '#d32f2f',
+			default: '#d32f2f'
 		},
 		pagiActiveNumColor: {
 			type: 'string',
-			default: '#ffffff',
+			default: '#ffffff'
 		},
 		pagiActiveBGColor: {
 			type: 'string',
-			default: '#c1c1c1',
+			default: '#c1c1c1'
+		},
+		paginationAlign: {
+			type: "string",
+			default: 'left'
 		},
 		postsPerPage: {
 			type: 'string',
-			default: '6',
+			default: '6'
 		},
 		theCategories: {
 			type: 'array',
@@ -120,6 +124,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		postQuery: {
 			type: 'string',
 			default: null
+		},
+		postOrder: {
+			type: 'string',
+			default: 'DESC'
 		},
 		colGap: {
 			type: 'string',
@@ -182,7 +190,35 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		},
 		hasLoveReact: {
 			type: 'boolean'
-		}
+		},
+		titleFontSize: {
+			type: 'string',
+			default: '22px'
+		},
+		metaFontSize: {
+			type: 'string',
+			default: '16px'
+		},
+		metaIconSize: {
+			type: 'string',
+			default: '15px'
+		},
+		descFontSize: {
+			type: 'string',
+			default: '19px'
+		},
+		buttonFontSize: {
+			type: 'string',
+			default: '16px'
+		},
+		catFontSize: {
+			type: 'string',
+			default: '20px'
+		},
+		authFontSize: {
+			type: 'string',
+			default: '20px'
+		},
 	},
 
 	edit({ clientId, attributes, setAttributes }) {
@@ -209,9 +245,11 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			paginationBGColor,
 			pagiActiveNumColor,
 			pagiActiveBGColor,
+			paginationAlign,
 			postsPerPage,
 			theCategories,
 			postQuery,
+			postOrder,
 			colGap,
 			rowGap,
 			excerptWordCount,
@@ -230,12 +268,25 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			hasLoveReact,
 			taxonomyColor,
 			taxonomyBGcolor,
-			taxonomyPrecolor
+			taxonomyPrecolor,
+			titleFontSize,
+			metaFontSize,
+			metaIconSize,
+			descFontSize,
+			buttonFontSize,
+			catFontSize,
+			authFontSize
 		} = attributes;
 
+		/**
+		 * Set unique ID through block index.
+		 */
 		let blockIndex = wp.data.select( 'core/block-editor' ).getBlockIndex( clientId );
 		setAttributes({ id: blockIndex });
 
+		/**
+		 * Set attributes of components.
+		 */
 		function onLayoutChange( newLayout ) {
 
 			setAttributes({ postLayout: newLayout });
@@ -256,6 +307,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 
 			setAttributes({ postQuery: newPostQuery });
 		}
+		function onPostOrderChange( newPostOrder ) {
+
+			setAttributes({ postOrder: newPostOrder });
+		}
 		function onColGapChange( newColGap ) {
 
 			setAttributes({ colGap: newColGap });
@@ -272,7 +327,42 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 
 			setAttributes({ postThumbSize: newThumbSize });
 		}
+		function onPaginationAlignChange( newPagiAlign ) {
 
+			setAttributes({ paginationAlign: newPagiAlign });
+		}
+		function onTitleFontSizeChange( newtitleFontSize ) {
+
+			setAttributes({ titleFontSize: newtitleFontSize });
+		}
+		function onMetaFontSizeChange( newMetaFontSize ) {
+
+			setAttributes({ metaFontSize: newMetaFontSize });
+		}
+		function onMetaIconSizeChange( newMetaIconSize ) {
+
+			setAttributes({ metaIconSize: newMetaIconSize });
+		}
+		function onDescFontSizeChange( newDescFontSize ) {
+
+			setAttributes({ descFontSize: newDescFontSize });
+		}
+		function onBtnFontSizeChange( newBtnFontSize ) {
+
+			setAttributes({ buttonFontSize: newBtnFontSize });
+		}
+		function onCatFontSizeChange( newCatFontSize ) {
+
+			setAttributes({ catFontSize: newCatFontSize });
+		}
+		function onAuthFontSizeChange( newAuthFontSize ) {
+
+			setAttributes({ authFontSize: newAuthFontSize });
+		}
+
+		/**
+		 * Set Attributes of Togglecontrol Components.
+		 */
 		const setPostThumb = () => setAttributes( { hasPostThumb: ! hasPostThumb } );
 		const setPostTitle = () => setAttributes( { hasPostTitle: ! hasPostTitle } );
 		const setPostAuthor = () => setAttributes( { hasPostAuthor: ! hasPostAuthor } );
@@ -286,8 +376,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		const setViewCount = () => setAttributes( { hasViewCount: ! hasViewCount } );
 		const setLoveReact = () => setAttributes( { hasLoveReact: ! hasLoveReact } );
 
-		// Use the below CHOSEN package to make the multiple select awesome.
-		// https://harvesthq.github.io/chosen/
+		/**
+		 * Select Categories.
+		 * @returns SelectControl component with category list.
+		 */
 		function FrhdCategoryListBase() {
 
 			const { useSelect } = wp.data;
@@ -330,6 +422,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 							{ value: null, label: 'Select a post layout', disabled: true },
 							{ label: 'Grid 1', value: 'grid1' },
 							{ label: 'Grid 2', value: 'grid2' },
+							{ label: 'Grid 3', value: 'grid3' },
 						]}
 						onChange={ onLayoutChange }
 					/>
@@ -385,6 +478,17 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 							{ label: 'Most Popular', value: 'popular' },
 						]}
 						onChange={ onPostQueryChange }
+					/>
+					<SelectControl
+						label={ __( 'Post Order:' ) }
+						help={ 'Designates the ascending or descending order of the post query.' }
+						value={ postOrder }
+						options={[
+							{ value: null, label: 'Select a post order:', disabled: true },
+							{ label: 'Ascending', value: 'ASC' },
+							{ label: 'Descending', value: 'DESC' },
+						]}
+						onChange={ onPostOrderChange }
 					/>
 					<SelectControl
 						label={ __( 'Thumbnail Size:' ) }
@@ -650,10 +754,86 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ ( colorValue ) => setAttributes( { pagiActiveBGColor: colorValue } )}
 						/>
 				</PanelBody>
+
+				<PanelBody
+					title={ 'Alignment' }
+					icon={ 'leftright' }
+					initialOpen={ false }
+					className={ 'frhd__alignment-options' }>
+					
+					<RadioControl
+						label={ 'Pagination Alignment' }
+						selected={ paginationAlign }
+						options={ [
+							{ label: 'Left', value: 'left' },
+							{ label: 'Center', value: 'center' },
+							{ label: 'Right', value: 'right' },
+						] }
+						onChange={ onPaginationAlignChange }
+						/>
+				</PanelBody>
+
+				<PanelBody
+					title={ 'Typography' }
+					icon={ 'editor-textcolor' }
+					initialOpen={ false }
+					className={ 'frhd__typography-options' }>
+
+					<UnitControl
+						onChange={ onTitleFontSizeChange }
+						label={ __( 'Post Title Font Size:' ) }
+						isUnitSelectTabbable
+						value={ titleFontSize }
+						/>
+
+					<UnitControl
+						onChange={ onMetaFontSizeChange }
+						label={ __( 'Meta Font Size:' ) }
+						isUnitSelectTabbable
+						value={ metaFontSize }
+						/>
+					
+					<UnitControl
+						onChange={ onMetaIconSizeChange }
+						label={ __( 'Meta Icon Size:' ) }
+						isUnitSelectTabbable
+						value={ metaIconSize }
+						/>
+
+					<UnitControl
+						onChange={ onDescFontSizeChange }
+						label={ __( 'Description Font Size:' ) }
+						isUnitSelectTabbable
+						value={ descFontSize }
+						/>
+
+					<UnitControl
+						onChange={ onBtnFontSizeChange }
+						label={ __( 'Button Font Size:' ) }
+						isUnitSelectTabbable
+						value={ buttonFontSize }
+						/>
+
+					<UnitControl
+						onChange={ onCatFontSizeChange }
+						label={ __( 'Category Font Size:' ) }
+						isUnitSelectTabbable
+						value={ catFontSize }
+						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						/>
+
+					<UnitControl
+						onChange={ onAuthFontSizeChange }
+						label={ __( 'Author Font Size:' ) }
+						isUnitSelectTabbable
+						value={ authFontSize }
+						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						/>
+				</PanelBody>
 			</InspectorControls>,
 
 			<div { ...useBlockProps() }>
-				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth}px !important;}.frhd__block-index-${id} .frhd__post-block-article{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;}.frhd__block-index-${id} .frhd__post-block-container{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {color: ${postTitleColor} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'}}.frhd__block-index-${id} .frhd__post-btn a {color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-block' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
+				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth}px !important;}.frhd__block-index-${id} .frhd__post-block-article{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;}.frhd__block-index-${id} .frhd__post-block-container{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {font-size: ${titleFontSize} !important;color: ${postTitleColor} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {font-size: ${metaFontSize};color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {height: ${metaIconSize};width: ${metaIconSize};fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {font-size: ${descFontSize};color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'}}.frhd__block-index-${id} .frhd__post-btn a{font-size: ${buttonFontSize};color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-flex' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
             	<ServerSideRender
                 	block={ "gutenberg-post-view/post-block" }
 					className={ 'frhd__block-index-' + id } />

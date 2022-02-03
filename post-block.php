@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: Forhad
  * Author URI: https://www.forhad.net
- * Version: 2.1.0
+ * Version: 2.2.1
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '2.1.0' );
+define( 'POST_BLOCK_VERSION', '2.2.1' );
 
 /**
  * Get Block Posts Attributes.
@@ -39,33 +39,34 @@ define( 'POST_BLOCK_VERSION', '2.1.0' );
 function frhd_render_block_core( $attributes ) {
 
 	// Get attributes value from editor page.
-	$frhd_block_id                = $attributes['id'] ? $attributes['id'] : '0';
-	$frhd_post_layout             = $attributes['postLayout'] ? $attributes['postLayout'] : 'grid1';
-	$frhd_block_max_width         = $attributes['maxWidth'] ? $attributes['maxWidth'] : '1140';
-	$frhd_post_column             = $attributes['postCol'] ? $attributes['postCol'] : '3';
-	$post_title_color             = $attributes['postTitleColor'] ? $attributes['postTitleColor'] : '#371f0e';
-	$posts_meta_color             = $attributes['postMetaColor'] ? $attributes['postMetaColor'] : '#424242';
-	$posts_meta_icon_color        = $attributes['postMetaIconColor'] ? $attributes['postMetaIconColor'] : '#424242';
-	$post_body_color              = $attributes['postBodyColor'] ? $attributes['postBodyColor'] : '#f5f5f5';
-	$post_taxonomy_color          = $attributes['taxonomyColor'] ? $attributes['taxonomyColor'] : '#000000';
-	$post_taxonomy_bg_color       = $attributes['taxonomyBGcolor'] ? $attributes['taxonomyBGcolor'] : '#ffc107';
-	$post_desc_color              = $attributes['postDescColor'] ? $attributes['postDescColor'] : '#4b4f58';
-	$post_btn_txt_color           = $attributes['postBtnTextColor'] ? $attributes['postBtnTextColor'] : '#ffffff';
-	$post_btn_color               = $attributes['postBtnColor'] ? $attributes['postBtnColor'] : '#d32f2f';
-	$post_btn_hover_txt_color     = $attributes['hoverBtnTextColor'] ? $attributes['hoverBtnTextColor'] : '#ffffff';
-	$post_btn_hover_color         = $attributes['hoverBtnColor'] ? $attributes['hoverBtnColor'] : '#ef5350';
-	$post_reading_time_color      = $attributes['readingTimeColor'] ? $attributes['readingTimeColor'] : '#ef5350';
-	$post_reading_time_icon_color = $attributes['readingTimeIconColor'] ? $attributes['readingTimeIconColor'] : '#d32f2f';
-	$post_pagination_num_color    = $attributes['paginationNumColor'] ? $attributes['paginationNumColor'] : '#ffffff';
-	$post_pagination_bg_color     = $attributes['paginationBGColor'] ? $attributes['paginationBGColor'] : '#d32f2f';
-	$post_pagi_active_num_color   = $attributes['pagiActiveNumColor'] ? $attributes['pagiActiveNumColor'] : '#ffffff';
-	$post_pagi_active_bg_color    = $attributes['pagiActiveBGColor'] ? $attributes['pagiActiveBGColor'] : '#c1c1c1';
-	$posts_per_page               = $attributes['postsPerPage'] ? $attributes['postsPerPage'] : '6';
-	$post_categories              = $attributes['theCategories'] ? $attributes['theCategories'] : 'random';
-	$post_query                   = $attributes['postQuery'] ? $attributes['postQuery'] : '';
-	$post_thumb_size              = $attributes['postThumbSize'] ? $attributes['postThumbSize'] : 'medium';
-	$posts_col_gap                = $attributes['colGap'] ? $attributes['colGap'] : '15';
-	$posts_excerpt_word_count     = $attributes['excerptWordCount'] ? $attributes['excerptWordCount'] : '19';
+	$frhd_block_id                = isset( $attributes['id'] ) ? $attributes['id'] : '0';
+	$frhd_post_layout             = isset( $attributes['postLayout'] ) ? $attributes['postLayout'] : 'grid1';
+	$frhd_block_max_width         = isset( $attributes['maxWidth'] ) ? $attributes['maxWidth'] : '1140';
+	$frhd_post_column             = isset( $attributes['postCol'] ) ? $attributes['postCol'] : '3';
+	$post_title_color             = isset( $attributes['postTitleColor'] ) ? $attributes['postTitleColor'] : '#371f0e';
+	$posts_meta_color             = isset( $attributes['postMetaColor'] ) ? $attributes['postMetaColor'] : '#424242';
+	$posts_meta_icon_color        = isset( $attributes['postMetaIconColor'] ) ? $attributes['postMetaIconColor'] : '#424242';
+	$post_body_color              = isset( $attributes['postBodyColor'] ) ? $attributes['postBodyColor'] : '#f5f5f5';
+	$post_taxonomy_bg_color       = isset( $attributes['taxonomyBGcolor'] ) ? $attributes['taxonomyBGcolor'] : '#ffc107';
+	$post_desc_color              = isset( $attributes['postDescColor'] ) ? $attributes['postDescColor'] : '#4b4f58';
+	$post_btn_txt_color           = isset( $attributes['postBtnTextColor'] ) ? $attributes['postBtnTextColor'] : '#ffffff';
+	$post_btn_color               = isset( $attributes['postBtnColor'] ) ? $attributes['postBtnColor'] : '#d32f2f';
+	$post_btn_hover_txt_color     = isset( $attributes['hoverBtnTextColor'] ) ? $attributes['hoverBtnTextColor'] : '#ffffff';
+	$post_btn_hover_color         = isset( $attributes['hoverBtnColor'] ) ? $attributes['hoverBtnColor'] : '#ef5350';
+	$post_reading_time_color      = isset( $attributes['readingTimeColor'] ) ? $attributes['readingTimeColor'] : '#ef5350';
+	$post_reading_time_icon_color = isset( $attributes['readingTimeIconColor'] ) ? $attributes['readingTimeIconColor'] : '#d32f2f';
+	$post_pagination_num_color    = isset( $attributes['paginationNumColor'] ) ? $attributes['paginationNumColor'] : '#ffffff';
+	$post_pagination_bg_color     = isset( $attributes['paginationBGColor'] ) ? $attributes['paginationBGColor'] : '#d32f2f';
+	$post_pagi_active_num_color   = isset( $attributes['pagiActiveNumColor'] ) ? $attributes['pagiActiveNumColor'] : '#ffffff';
+	$post_pagi_active_bg_color    = isset( $attributes['pagiActiveBGColor'] ) ? $attributes['pagiActiveBGColor'] : '#c1c1c1';
+	$posts_per_page               = isset( $attributes['postsPerPage'] ) ? $attributes['postsPerPage'] : '6';
+	$post_categories              = isset( $attributes['theCategories'] ) ? $attributes['theCategories'] : 'random';
+	$post_query                   = isset( $attributes['postQuery'] ) ? $attributes['postQuery'] : '';
+	$post_order                   = isset( $attributes['postOrder'] ) ? $attributes['postOrder'] : 'DESC';
+	$post_thumb_size              = isset( $attributes['postThumbSize'] ) ? $attributes['postThumbSize'] : 'medium';
+	$posts_col_gap                = isset( $attributes['colGap'] ) ? $attributes['colGap'] : '15';
+	$posts_excerpt_word_count     = isset( $attributes['excerptWordCount'] ) ? $attributes['excerptWordCount'] : '19';
+	$post_pagination_align        = isset( $attributes['paginationAlign'] ) ? $attributes['paginationAlign'] : 'left';
 	$post_thumb_show              = isset( $attributes['hasPostThumb'] ) ? $attributes['hasPostThumb'] : true;
 	$post_title_show              = isset( $attributes['hasPostTitle'] ) ? $attributes['hasPostTitle'] : true;
 	$post_author_show             = isset( $attributes['hasPostAuthor'] ) ? $attributes['hasPostAuthor'] : true;
@@ -78,6 +79,11 @@ function frhd_render_block_core( $attributes ) {
 	$post_pagination              = isset( $attributes['hasPostPagin'] ) ? $attributes['hasPostPagin'] : true;
 	$post_view_count              = isset( $attributes['hasViewCount'] ) ? $attributes['hasViewCount'] : true;
 	$post_love_react              = isset( $attributes['hasLoveReact'] ) ? $attributes['hasLoveReact'] : false;
+	$post_title_font_size         = isset( $attributes['titleFontSize'] ) ? $attributes['titleFontSize'] : '22px';
+	$post_meta_font_size          = isset( $attributes['metaFontSize'] ) ? $attributes['metaFontSize'] : '16px';
+	$post_meta_icon_size          = isset( $attributes['metaIconSize'] ) ? $attributes['metaIconSize'] : '15px';
+	$post_desc_font_size          = isset( $attributes['descFontSize'] ) ? $attributes['descFontSize'] : '19px';
+	$post_btn_font_size           = isset( $attributes['buttonFontSize'] ) ? $attributes['buttonFontSize'] : '16px';
 
 	// Protect against arbitrary paged values.
 	$frhd_paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
@@ -87,7 +93,7 @@ function frhd_render_block_core( $attributes ) {
 		'post_type'      => 'post',
 		'paged'          => $frhd_paged,
 		'cat'            => $post_categories,
-		'order'          => 'DESC',
+		'order'          => $post_order,
 	);
 
 	if ( 'popular' == $post_query ) {
@@ -112,6 +118,11 @@ function frhd_render_block_core( $attributes ) {
 			case 'grid2':
 				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-2.php';
 				wp_enqueue_style( 'post-grid-2' );
+				break;
+
+			case 'grid3':
+				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-3.php';
+				wp_enqueue_style( 'post-grid-3' );
 				break;
 		}
 
@@ -247,5 +258,7 @@ function frhd_enqueue_layout_scripts() {
 	wp_register_style( 'post-grid-1', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-1.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
 
 	wp_register_style( 'post-grid-2', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-2.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
+
+	wp_register_style( 'post-grid-3', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-3.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
 }
 add_action( 'wp_enqueue_scripts', 'frhd_enqueue_layout_scripts' );

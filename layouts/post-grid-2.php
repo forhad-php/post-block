@@ -12,11 +12,14 @@
 $posts_row_gap = $attributes['rowGap'] ? $attributes['rowGap'] : '30';
 
 // Only for POST-GRID-2 layout.
-$post_date_bg_color = $attributes['postDateBGColor'] ? $attributes['postDateBGColor'] : '#ffc107';
-$taxonomy_pre_color = $attributes['taxonomyPrecolor'] ? $attributes['taxonomyPrecolor'] : '#497898';
-$post_author_color  = $attributes['postAuthorColor'] ? $attributes['postAuthorColor'] : '#497898';
+$post_date_bg_color  = isset( $attributes['postDateBGColor'] ) ? $attributes['postDateBGColor'] : '#ffc107';
+$taxonomy_pre_color  = isset( $attributes['taxonomyPrecolor'] ) ? $attributes['taxonomyPrecolor'] : '#497898';
+$post_author_color   = isset( $attributes['postAuthorColor'] ) ? $attributes['postAuthorColor'] : '#497898';
+$post_taxonomy_color = isset( $attributes['taxonomyColor'] ) ? $attributes['taxonomyColor'] : '#ec398b';
+$post_cat_font_size  = isset( $attributes['catFontSize'] ) ? $attributes['catFontSize'] : '20px';
+$post_auth_font_size = isset( $attributes['authFontSize'] ) ? $attributes['authFontSize'] : '20px';
 ?>
-<style>div.frhd__post-block-wrapper{max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}.frhd__post-grid-2 .frhd__post-block-article {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}.frhd__post-grid-2.frhd__post-block-container{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}.frhd__post-grid-2 .frhd__post-title a{color: <?php echo esc_attr( $post_title_color ); ?>;}.frhd__post-grid-2 .frhd__post-block-article{background-color: <?php echo esc_attr( $post_body_color ); ?>;}.frhd__post-grid-2 .frhd__post-meta, .frhd__post-meta a{color: <?php echo esc_attr( $posts_meta_color ); ?>;}.frhd__post-grid-2 .frhd__post-meta svg{fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}.frhd__post-grid-2 .frhd__post-excerpt p{color: <?php echo esc_attr( $post_desc_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__cat-wrap a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__cat-wrap{color: <?php echo esc_attr( $taxonomy_pre_color ); ?>;}.frhd__post-grid-2 .frhd__paginate .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}.frhd__post-grid-2 .frhd__paginate .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}.frhd__post-grid-2 .frhd__date-wrap{background: <?php echo esc_attr( $post_date_bg_color ); ?> !important;}.frhd__post-grid-2 .frhd__date-wrap:before{border-left: 10px solid <?php echo esc_attr( $post_date_bg_color ); ?> !important;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__post-author,#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__post-author a {color: <?php echo esc_attr( $post_author_color ); ?>;}</style>
+<style>#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-block-wrapper{max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}.frhd__post-grid-2 .frhd__post-block-article {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}.frhd__post-grid-2.frhd__post-block-container{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}.frhd__post-grid-2 .frhd__post-title a{font-size: <?php echo esc_attr( $post_title_font_size ); ?>;color: <?php echo esc_attr( $post_title_color ); ?>;}.frhd__post-grid-2 .frhd__post-block-article{background-color: <?php echo esc_attr( $post_body_color ); ?>;}.frhd__post-grid-2 .frhd__post-meta, .frhd__post-meta a{font-size: <?php echo esc_attr( $post_meta_font_size ); ?>;color: <?php echo esc_attr( $posts_meta_color ); ?>;}.frhd__post-grid-2 .frhd__post-meta svg{height: <?php echo esc_attr( $post_meta_icon_size ); ?>;width: <?php echo esc_attr( $post_meta_icon_size ); ?>;fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}.frhd__post-grid-2 .frhd__post-excerpt p{font-size: <?php echo esc_attr( $post_desc_font_size ); ?>;color: <?php echo esc_attr( $post_desc_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__cat-wrap a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__cat-wrap{font-size: <?php echo esc_attr( $post_cat_font_size ); ?>;color: <?php echo esc_attr( $taxonomy_pre_color ); ?>;}.frhd__post-grid-2 .frhd__paginate .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}.frhd__post-grid-2 .frhd__paginate .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}.frhd__post-grid-2 .frhd__date-wrap{background: <?php echo esc_attr( $post_date_bg_color ); ?> !important;}.frhd__post-grid-2 .frhd__date-wrap:before{border-left: 10px solid <?php echo esc_attr( $post_date_bg_color ); ?> !important;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__post-author,#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-2 .frhd__post-author a {font-size: <?php echo esc_attr( $post_auth_font_size ); ?>;color: <?php echo esc_attr( $post_author_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__paginate {text-align: <?php echo esc_attr( $post_pagination_align ); ?>;}</style>
 <div id="frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?>" class="frhd__post-block-wrapper">
 	<div class="frhd__post-block-container frhd__post-grid-2">
 		<?php
@@ -55,11 +58,7 @@ $post_author_color  = $attributes['postAuthorColor'] ? $attributes['postAuthorCo
 
 						if ( $post_date_show ) {
 
-							$frhd_category_name = get_the_category( get_the_ID() );
-							if ( $frhd_category_name ) {
-
-								echo '<div class="frhd__date-wrap"><time>' . esc_html( get_the_date( 'd' ) ) . '</time><br><time>' . esc_html( get_the_date( 'M' ) ) . '</time></div>';
-							}
+							echo '<div class="frhd__date-wrap"><time>' . esc_html( get_the_date( 'd' ) ) . '</time><br><time>' . esc_html( get_the_date( 'M' ) ) . '</time></div>';
 						}
 						?>
 					</div>
@@ -105,9 +104,13 @@ $post_author_color  = $attributes['postAuthorColor'] ? $attributes['postAuthorCo
 								</div>';
 					}
 
-					if ( $post_excerpt_show ) {
+					if ( $post_taxonomy_show ) {
 
-						echo '<div class="frhd__cat-wrap">Added to: ' . get_the_category_list( ', ' ) . '</div>';
+						$frhd_category_name = get_the_category( get_the_ID() );
+						if ( $frhd_category_name ) {
+
+							echo '<div class="frhd__cat-wrap">Added to: ' . get_the_category_list( ', ' ) . '</div>';
+						}
 					}
 
 					if ( $post_author_show ) {
@@ -123,23 +126,24 @@ $post_author_color  = $attributes['postAuthorColor'] ? $attributes['postAuthorCo
 
 		}
 		wp_reset_postdata();
-
-		// Pagination.
-		if ( $post_pagination ) {
-
-			$frhd_big = 999999999; // Need an unlikely integer.
-			echo '<div class="frhd__paginate">';
-			$frhd_arg = array(
-				'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
-				'format'    => '?paged=%#%',
-				'current'   => max( 1, get_query_var( 'paged' ) ),
-				'total'     => $frhd_post_query->max_num_pages,
-				'prev_text' => __( '«' ),
-				'next_text' => __( '»' ),
-			);
-			echo wp_kses_post( paginate_links( $frhd_arg ) );
-			echo '</div>'; // frhd_paginate.
-		}
 		?>
 	</div>
+	<?php
+	// Pagination.
+	if ( $post_pagination ) {
+
+		$frhd_big = 999999999; // Need an unlikely integer.
+		echo '<div class="frhd__paginate">';
+		$frhd_arg = array(
+			'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
+			'format'    => '?paged=%#%',
+			'current'   => max( 1, get_query_var( 'paged' ) ),
+			'total'     => $frhd_post_query->max_num_pages,
+			'prev_text' => __( '«' ),
+			'next_text' => __( '»' ),
+		);
+		echo wp_kses_post( paginate_links( $frhd_arg ) );
+		echo '</div>'; // frhd_paginate.
+	}
+	?>
 </div>

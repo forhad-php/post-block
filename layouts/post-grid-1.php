@@ -9,9 +9,10 @@
  * @package Post Blcok
  */
 
-$posts_row_gap = $attributes['rowGap'] ? $attributes['rowGap'] : '15';
+$posts_row_gap       = isset( $attributes['rowGap'] ) ? $attributes['rowGap'] : '15';
+$post_taxonomy_color = isset( $attributes['taxonomyColor'] ) ? $attributes['taxonomyColor'] : '#000000';
 ?>
-<style>#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?>{max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-block-article {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-1.frhd__post-block-container{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-title a{color: <?php echo esc_attr( $post_title_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-block-article{background-color: <?php echo esc_attr( $post_body_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__cat-name a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>;background-color: <?php echo esc_attr( $post_taxonomy_bg_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta, #frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta a{color: <?php echo esc_attr( $posts_meta_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta svg{fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-excerpt p{color: <?php echo esc_attr( $post_desc_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn a{color: <?php echo esc_attr( $post_btn_txt_color ); ?>;background: <?php echo esc_attr( $post_btn_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> #frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn:hover a{color: <?php echo esc_attr( $post_btn_hover_txt_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn:hover a{background-color: <?php echo esc_attr( $post_btn_hover_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__reading-time{color: <?php echo esc_attr( $post_reading_time_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__reading-time svg{fill: <?php echo esc_attr( $post_reading_time_icon_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}</style>
+<style>#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?>{max-width: <?php echo esc_attr( $frhd_block_max_width ); ?>px !important;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-block-article {flex-basis: calc(100% / <?php echo esc_html( $frhd_post_column . ' - ' . $posts_col_gap . 'px' ); ?>);}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-grid-1.frhd__post-block-container{row-gap: <?php echo esc_attr( $posts_row_gap ); ?>px;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-title a{font-size: <?php echo esc_attr( $post_title_font_size ); ?>;color: <?php echo esc_attr( $post_title_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-block-article{background-color: <?php echo esc_attr( $post_body_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__cat-name a{color: <?php echo esc_attr( $post_taxonomy_color ); ?>;background-color: <?php echo esc_attr( $post_taxonomy_bg_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta, #frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta a{font-size: <?php echo esc_attr( $post_meta_font_size ); ?>;color: <?php echo esc_attr( $posts_meta_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-meta svg{height: <?php echo esc_attr( $post_meta_icon_size ); ?>;width: <?php echo esc_attr( $post_meta_icon_size ); ?>;fill: <?php echo esc_attr( $posts_meta_icon_color ); ?>}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-excerpt p{font-size: <?php echo esc_attr( $post_desc_font_size ); ?>;color: <?php echo esc_attr( $post_desc_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn a{font-size: <?php echo esc_attr( $post_btn_font_size ); ?>;color: <?php echo esc_attr( $post_btn_txt_color ); ?>;background: <?php echo esc_attr( $post_btn_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> #frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn:hover a{color: <?php echo esc_attr( $post_btn_hover_txt_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__post-btn:hover a{background-color: <?php echo esc_attr( $post_btn_hover_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__reading-time{font-size: <?php echo esc_attr( $post_meta_font_size ); ?>;color: <?php echo esc_attr( $post_reading_time_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__reading-time svg{height: <?php echo esc_attr( $post_meta_icon_size ); ?>;width: <?php echo esc_attr( $post_meta_icon_size ); ?>;fill: <?php echo esc_attr( $post_reading_time_icon_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .page-numbers{color: <?php echo esc_attr( $post_pagination_num_color ); ?>;background: <?php echo esc_attr( $post_pagination_bg_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .page-numbers.current{color: <?php echo esc_attr( $post_pagi_active_num_color ); ?>;background: <?php echo esc_attr( $post_pagi_active_bg_color ); ?>;}#frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?> .frhd__paginate {text-align: <?php echo esc_attr( $post_pagination_align ); ?>;}</style>
 <div id="frhd__block-id-<?php echo esc_attr( $frhd_block_id ); ?>" class="frhd__post-block-wrapper">
 	<div class="frhd__post-block-container frhd__post-grid-1">
 		<?php
@@ -135,23 +136,24 @@ $posts_row_gap = $attributes['rowGap'] ? $attributes['rowGap'] : '15';
 
 		}
 		wp_reset_postdata();
-
-		// Pagination.
-		if ( $post_pagination ) {
-
-			$frhd_big = 999999999; // Need an unlikely integer.
-			echo '<div class="frhd__paginate">';
-			$frhd_arg = array(
-				'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
-				'format'    => '?paged=%#%',
-				'current'   => max( 1, get_query_var( 'paged' ) ),
-				'total'     => $frhd_post_query->max_num_pages,
-				'prev_text' => __( '«' ),
-				'next_text' => __( '»' ),
-			);
-			echo wp_kses_post( paginate_links( $frhd_arg ) );
-			echo '</div>'; // frhd_paginate.
-		}
 		?>
 	</div>
+	<?php
+	// Pagination.
+	if ( $post_pagination ) {
+
+		$frhd_big = 999999999; // Need an unlikely integer.
+		echo '<div class="frhd__paginate">';
+		$frhd_arg = array(
+			'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
+			'format'    => '?paged=%#%',
+			'current'   => max( 1, get_query_var( 'paged' ) ),
+			'total'     => $frhd_post_query->max_num_pages,
+			'prev_text' => __( '«' ),
+			'next_text' => __( '»' ),
+		);
+		echo wp_kses_post( paginate_links( $frhd_arg ) );
+		echo '</div>'; // frhd_paginate.
+	}
+	?>
 </div>

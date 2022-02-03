@@ -1,3 +1,10 @@
+/* Reset */
+.frhd__post-block-wrapper h2,
+.frhd__post-block-wrapper p {
+    margin: 0;
+	font-size: 100%;
+}
+
 /* Conditional Menu */
 .frhd__menu-hide {
     display: none !important;
@@ -64,6 +71,34 @@
 .frhd__color-picker strong span {
     margin-bottom: -4px;
 }
+.frhd__alignment-options .components-panel__icon {
+    font-size: 25px;
+    line-height: 22px;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.frhd__typography-options .components-panel__icon {
+    font-size: 24px;
+    line-height: 24px;
+    margin-left: 3px;
+    margin-right: 3px;
+    color: #55717e;
+}
+.frhd__typography-options .components-input-control__container {
+    width: 70px;
+}
+.frhd__typography-options .components-unit-control-wrapper {
+    margin: 15px 0;
+}
+.frhd__typography-options .components-input-control__label {
+    font-size: 14px;
+}
+
+.frhd__typography-options .components-unit-control__select,
+.frhd__typography-options .components-unit-control__select option {
+    font-size: 11px !important;
+    width: 25px !important;
+}
 
 /* Post View Styles Missing */
 .frhd__post-block-container {
@@ -75,9 +110,11 @@
     column-gap: 15px;
     row-gap: 20px;
 }
-.frhd__post-title h2 {
-    line-height: 0;
+.frhd__post-title {
     margin-bottom: 10px;
+}
+.frhd__post-title h2 {
+    line-height: 0 !important;
 }
 .frhd__post-title a {
     display: inline-block;
@@ -104,10 +141,10 @@
     font-size: 19px;
     line-height: 24px;
     color: #4b4f58;
+    margin-bottom: 20px;
 }
 .frhd__post-meta {
     font-size: 16px;
-    margin: 8px 0 !important;
     display: flex;
     flex-direction: row;
     column-gap: 20px;
@@ -148,9 +185,10 @@ span.frhd__cat-name a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
 }
 .frhd__reading-time {
+    display: flex;
+    align-items: center;
     margin-right: 20px;
     font-size: 14px;
     color: #ef5350;
@@ -158,7 +196,6 @@ span.frhd__cat-name a:hover {
 .frhd__reading-time svg {
     width: 16px;
     height: 16px;
-    margin-bottom: -4px;
     margin-right: 5px;
     fill: #d32f2f;
 }

@@ -4,7 +4,7 @@ Donate link: https://forhad.net/donate/
 Tags: custom post grid, display posts, gutenberg blocks, popular posts, post grid
 Requires at least: 4.5
 Tested up to: 5.8.2
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,11 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 
 = 2.1.0 =
 * Add: Multi level indexing.
+* Add: Typography options.
 * Fix: Post reading time not working.
 * Fix: Author url not working.
 * Fix: Meta prefix color not changing.
+
+= 2.2.1 =
+* Add: New Grid Layout.
+* Add: Post ordering.
