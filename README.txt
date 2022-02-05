@@ -4,7 +4,7 @@ Donate link: https://forhad.net/donate/
 Tags: custom post grid, display posts, gutenberg blocks, popular posts, post grid
 Requires at least: 4.5
 Tested up to: 5.8.2
-Stable tag: 2.1.1
+Stable tag: 2.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,8 +66,10 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 
 == Screenshots ==
 
-1. Post Block (Demo).
-2. Post Block (Demo 2).
+1. Post Block (Demo 1)
+2. Post Block (Demo 2)
+3. Post Block (Demo 3)
+4. Post Block (Demo 4)
 
 == Changelog ==
 
@@ -97,3 +99,8 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 = 2.2.1 =
 * Add: New Grid Layout.
 * Add: Post ordering.
+
+= 2.3.0 =
+* Add: New Grid Layout.
+* Add: Rounded Column Size.
+* Fix: Conflict with multiple blocks (Wordpress 5.9)

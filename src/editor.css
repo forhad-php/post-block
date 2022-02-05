@@ -95,9 +95,16 @@
 }
 
 .frhd__typography-options .components-unit-control__select,
-.frhd__typography-options .components-unit-control__select option {
+.frhd__typography-options .components-unit-control__select option,
+.frhd__global-control .components-unit-control__select,
+.frhd__global-control .components-unit-control__select option {
     font-size: 11px !important;
     width: 25px !important;
+}
+.frhd__global-control .components-unit-control-wrapper {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
 }
 
 /* Post View Styles Missing */

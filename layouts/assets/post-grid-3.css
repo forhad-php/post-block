@@ -1,15 +1,16 @@
 span.frhd__cat-name a:hover {
     border-color: transparent;
 }
-.frhd__post-btn a {
+.frhd__post-grid-3 .frhd__post-btn a {
     display: block;
+    width: 100%;
     text-align: center;
     text-transform: uppercase;
     font-size: 16px;
     line-height: 30px;
     color: #fff;
     background: linear-gradient(60deg, #ef5350, #d32f2f);
-    padding: 3px 1px;
+    padding: 5px 1px;
     border-radius: 5px;
     text-decoration: none;
     border: 1px solid transparent;
@@ -17,7 +18,7 @@ span.frhd__cat-name a:hover {
 .frhd__post-btn a:hover {
     border-color: #fff;
 }
-.frhd__reading-time {
+.frhd__post-grid-3 .frhd__reading-time {
     display: flex;
     align-items: center;
     margin-right: 20px;
