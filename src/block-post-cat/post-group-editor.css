@@ -1,0 +1,83 @@
+/* Post Group Visual Styles */
+.frhd__post-group-wrapper h3,
+.frhd__post-group-wrapper p {
+    margin: 0 !important;
+}
+.frhd__post-group-wrapper {
+    position: relative;
+    background: #f5f5f5;
+    text-align: center;
+    padding: 20px 0 30px;
+    padding-top: 0;
+    box-shadow: rgb(0 0 0 / 15%) 1.95px 1.95px 2.6px;
+    border-radius: 10px;
+}
+.frhd__post-group-wrapper > *:not(.frhd__post-group-image) {
+    padding: 0 20px;
+}
+.frhd__post-group-image img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.frhd__post-group-name h3 {
+    color: #00334e;
+    font-size: 27px;
+    font-weight: bold;
+}
+.frhd__post-group-name {
+    margin: 15px 0;
+}
+.frhd__post-list-wrap a {
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1px dashed #00334e;
+}
+.frhd__post-list-wrap p:not(:last-child) a {
+    margin-bottom: 5px;
+}
+
+.frhd__post-group-image img {
+    display: none;
+}
+.frhd__post-group-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Conditional Menu */
+.frhd__gr-menu-hide {
+    display: none !important;
+}
+.frhd__gr-menu-show {
+    display: block;
+}
+
+
+
+/* Options Field Styles */
+.frhd__global-control-gr .frhd__gr-media-btn {
+    border: 1px solid #007cba;
+    color: #007cba;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+.frhd__global-control-gr .components-heading {
+    margin-bottom: 5px !important;
+}
+.frhd__gr-width-70 .components-input-control__container {
+    width: 70px;
+}
+.frhd__global-control-gr .frhd__gr-width-70 {
+    margin: 20px 0;
+}
+.frhd__global-control-gr .components-button {
+    background: aliceblue;
+}
+.frhd__global-control-gr .components-button:hover {
+    background: #f1f1f1;
+}

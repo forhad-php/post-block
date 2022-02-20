@@ -106,6 +106,15 @@
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
 }
+.frhd__query-control .components-heading.frhd__pb-heading {
+    margin-bottom: 5px;
+}
+.frhd__query-control .frhd__pb-unitcontrol {
+    margin-bottom: 20px;
+}
+.frhd__query-control .frhd__pb-unitcontrol .components-input-control__container {
+    width: 70px;
+}
 
 /* Post View Styles Missing */
 .frhd__post-block-container {

@@ -104,3 +104,9 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 * Add: New Grid Layout.
 * Add: Rounded Column Size.
 * Fix: Conflict with multiple blocks (Wordpress 5.9)
+
+= 3.0.0 =
+* Add: Post Group Layout.
+* Add: Group Image.
+* Add: Equal Height.
+* Add: Read More Button Custom Text.

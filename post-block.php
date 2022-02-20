@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: Forhad
  * Author URI: https://www.forhad.net
- * Version: 2.3.0
+ * Version: 3.0.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '2.3.0' );
+define( 'POST_BLOCK_VERSION', '3.0.0' );
 
 /**
  * Get Block Posts Attributes.
@@ -50,7 +50,6 @@ function frhd_render_block_core( $attributes ) {
 	$post_desc_color            = isset( $attributes['postDescColor'] ) ? $attributes['postDescColor'] : '#4b4f58';
 	$post_btn_txt_color         = isset( $attributes['postBtnTextColor'] ) ? $attributes['postBtnTextColor'] : '#ffffff';
 	$post_btn_color             = isset( $attributes['postBtnColor'] ) ? $attributes['postBtnColor'] : '#d32f2f';
-	$post_btn_hover_txt_color   = isset( $attributes['hoverBtnTextColor'] ) ? $attributes['hoverBtnTextColor'] : '#ffffff';
 	$post_btn_hover_color       = isset( $attributes['hoverBtnColor'] ) ? $attributes['hoverBtnColor'] : '#ef5350';
 	$post_pagination_num_color  = isset( $attributes['paginationNumColor'] ) ? $attributes['paginationNumColor'] : '#ffffff';
 	$post_pagi_active_num_color = isset( $attributes['pagiActiveNumColor'] ) ? $attributes['pagiActiveNumColor'] : '#ffffff';
@@ -78,6 +77,14 @@ function frhd_render_block_core( $attributes ) {
 	$post_meta_icon_size        = isset( $attributes['metaIconSize'] ) ? $attributes['metaIconSize'] : '15px';
 	$post_desc_font_size        = isset( $attributes['descFontSize'] ) ? $attributes['descFontSize'] : '19px';
 	$post_btn_font_size         = isset( $attributes['buttonFontSize'] ) ? $attributes['buttonFontSize'] : '16px';
+	$post_thumb_equal_show      = isset( $attributes['hasEqualHeight'] ) ? $attributes['hasEqualHeight'] : false;
+	$post_thumb_equal_size      = isset( $attributes['equalHeightSize'] ) ? $attributes['equalHeightSize'] : '200px';
+
+	$post_thumb_equal_size_render = '';
+	if ( $post_thumb_equal_show ) {
+
+		$post_thumb_equal_size_render = 'max-height:' . $post_thumb_equal_size . ';';
+	}
 
 	// Protect against arbitrary paged values.
 	$frhd_paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
@@ -131,6 +138,22 @@ function frhd_render_block_core( $attributes ) {
 
 		return '<p>No posts found!</p>';
 	}
+
+}
+
+/**
+ * Get Block Posts Attributes.
+ *
+ * @param Mixed $attributes Get attributes from block settings.
+ * @return HTML
+ */
+function frhd_render_block_catpost( $attributes ) {
+
+	ob_start(); // Turn on output buffering.
+
+	require plugin_dir_path( __FILE__ ) . 'layouts/post-group-1.php';
+
+	return ob_get_clean(); // Turn off ouput buffer and print output.
 
 }
 
@@ -199,6 +222,77 @@ function frhd_register_block() {
 
 		session_start();
 	}
+
+	/**
+	 * Post Block End here.
+	 * Also Post Group Start from here.
+	 * Rest of the code wraped with a condition.
+	 */
+	wp_register_style(
+		'post-group-editor',
+		plugins_url( 'src/block-post-cat/post-group-editor.css', __FILE__ ),
+		array( 'wp-edit-blocks' ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group-editor.css' ),
+	);
+	wp_register_style(
+		'post-group-css',
+		plugins_url( 'src/block-post-cat/post-group.css', __FILE__ ),
+		array(),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group.css' ),
+	);
+
+	/**
+	 * Register Block Type : Category Post.
+	 */
+	$rbtcp_args = array(
+		'api_version'     => 2,
+		'style'           => 'post-group-css',
+		'editor_style'    => 'post-group-editor',
+		'editor_script'   => 'post-block-esnext',
+		'attributes'      => array(
+			'groupImage'       => array(
+				'type'    => 'string',
+				'default' => 'https://via.placeholder.com/300',
+			),
+			'groupImageObj'    => array(
+				'type' => 'object',
+			),
+			'groupImageSize'   => array(
+				'type'    => 'string',
+				'default' => 'full',
+			),
+			'isEqualHeight'    => array(
+				'type'    => 'boolean',
+				'default' => false,
+			),
+			'groupImageHeight' => array(
+				'type'    => 'string',
+				'default' => '300px',
+			),
+			'theCategories'    => array(
+				'type'    => 'array',
+				'default' => null,
+			),
+			'groupTitle'       => array(
+				'type'    => 'string',
+				'default' => 'Group Title',
+			),
+			'postsPerPage'     => array(
+				'type'    => 'string',
+				'default' => '5',
+			),
+			'titleWordCount'   => array(
+				'type'    => 'string',
+				'default' => '3',
+			),
+		),
+		'render_callback' => 'frhd_render_block_catpost',
+	);
+
+	register_block_type(
+		'category-post-view/post-group',
+		$rbtcp_args
+	);
 }
 add_action( 'init', 'frhd_register_block' );
 

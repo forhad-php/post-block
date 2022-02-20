@@ -1,11 +1,13 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, ColorPalette, useBlockProps } from '@wordpress/block-editor';
-import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, GradientPicker } from '@wordpress/components';
+import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, __experimentalInputControl as InputControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
 import Style from 'style-it';
+
+import './block-post-cat';
 
 registerBlockType( 'gutenberg-post-view/post-block', {
 	title: __( 'Post Block' ),
@@ -224,8 +226,19 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			default: '20px'
 		},
 		bodyContentColor: {
-			type: "string",
+			type: 'string',
 			default: '#ffffff'
+		},
+		readMoreBtnText: {
+			type: 'string',
+			default: 'Read More!'
+		},
+		hasEqualHeight: {
+			type: 'boolean'
+		},
+		equalHeightSize: {
+			type: 'string',
+			default: '200px'
 		},
 	},
 
@@ -285,7 +298,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			buttonFontSize,
 			catFontSize,
 			authFontSize,
-			bodyContentColor
+			bodyContentColor,
+			readMoreBtnText,
+			hasEqualHeight,
+			equalHeightSize
 		} = attributes;
 
 		/**
@@ -374,6 +390,14 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 
 			setAttributes({ authFontSize: newAuthFontSize });
 		}
+		function onReadMoreBtnTxtChange( newReadMoreBtnTxt ) {
+
+			setAttributes({ readMoreBtnText: newReadMoreBtnTxt });
+		}
+		function onEqualSizeChange( newEqualSize ) {
+
+			setAttributes({ equalHeightSize: newEqualSize });
+		}
 
 		/**
 		 * Set Attributes of Togglecontrol Components.
@@ -390,6 +414,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		const setPostPagin = () => setAttributes( { hasPostPagin: ! hasPostPagin } );
 		const setViewCount = () => setAttributes( { hasViewCount: ! hasViewCount } );
 		const setLoveReact = () => setAttributes( { hasLoveReact: ! hasLoveReact } );
+		const setEqualHeight = () => setAttributes( { hasEqualHeight: ! hasEqualHeight } );
 
 		/**
 		 * Select Categories.
@@ -428,7 +453,8 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					title={ __( 'Global Control' ) }
 					icon={ 'admin-site-alt3' }
 					initialOpen={ true }
-					className={ 'frhd__global-control' }>
+					className={ 'frhd__global-control' }
+					>
 					<SelectControl
 						label={ __( 'Post Layout:' ) }
 						help={ 'Post Layout mainly show the view of a post.' }
@@ -486,8 +512,12 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 				<PanelBody
 					title={ 'Query' }
 					icon={ 'filter' }
-					initialOpen={ false }>
-					<Heading>Set one or multiple categories.</Heading>
+					initialOpen={ false }
+					className={ 'frhd__query-control' }
+					>
+					<Heading
+						className={ 'frhd__pb-heading' }
+						>Set one or multiple categories.</Heading>
 					<FrhdCategoryListBase />
 					<SelectControl
 						label={ __( 'Post Query:' ) }
@@ -524,6 +554,30 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						]}
 						onChange={ onPostThumbSizeChange }
 					/>
+					<ToggleControl
+						label={
+							hasEqualHeight
+								? 'Enable Equal Size.'
+								: 'Disable Equal Size.'
+						}
+						checked={ hasEqualHeight }
+						onChange={ setEqualHeight }
+						className={ ('grid4' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
+						/>
+					<UnitControl
+						label={ __( 'Set a maximum height of feature images:' ) }
+						onChange={ onEqualSizeChange }
+						isUnitSelectTabbable
+						value={ equalHeightSize }
+						className={ hasEqualHeight ? 'frhd__menu-show frhd__pb-unitcontrol' : 'frhd__menu-hide' }
+						/>
+					<Heading
+						className={ 'frhd__pb-heading' }
+						>Set a Read More Text:</Heading>
+					<InputControl
+						value={ readMoreBtnText }
+						onChange={ onReadMoreBtnTxtChange }
+						/>
 				</PanelBody>
 
 				<PanelBody
@@ -657,10 +711,11 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ ( colorValue ) => setAttributes( { postBodyColor: colorValue } )}
 						/>
 
-					<strong>{ __( "Posts Body Content Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: bodyContentColor }} ></span></strong>
+					<strong className={ 'grid4' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }>{ __( "Posts Body Content Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: bodyContentColor }} ></span></strong>
 					<ColorPalette
 						value={ bodyContentColor }
 						onChange={ ( colorValue ) => setAttributes( { bodyContentColor: colorValue } )}
+						className={ 'grid4' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
 						/>
 
 					<strong>{ __( "Post Title Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postTitleColor }} ></span></strong>
@@ -745,16 +800,18 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ ( colorValue ) => setAttributes( { hoverBtnColor: colorValue } )}
 						/>
 							
-					<strong>{ __( "Posts Reading Time Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: readingTimeColor }} ></span></strong>
+					<strong className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-hide' }>{ __( "Posts Reading Time Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: readingTimeColor }} ></span></strong>
 					<ColorPalette
 						value={ readingTimeColor }
 						onChange={ ( colorValue ) => setAttributes( { readingTimeColor: colorValue } )}
+						className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-hide' }
 						/>
 							
-					<strong>{ __( "Reading Time Icon Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: readingTimeIconColor }} ></span></strong>
+					<strong className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-hide' }>{ __( "Reading Time Icon Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: readingTimeIconColor }} ></span></strong>
 					<ColorPalette
 						value={ readingTimeIconColor }
 						onChange={ ( colorValue ) => setAttributes( { readingTimeIconColor: colorValue } )}
+						className={ 'grid2' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-hide' }
 						/>
 								
 					<strong>{ __( "Pagination Number Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: paginationNumColor}} ></span></strong>
