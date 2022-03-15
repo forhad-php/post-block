@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: Forhad
  * Author URI: https://www.forhad.net
- * Version: 3.0.0
+ * Version: 4.0.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '3.0.0' );
+define( 'POST_BLOCK_VERSION', '4.0.0' );
 
 /**
  * Get Block Posts Attributes.
@@ -129,6 +129,11 @@ function frhd_render_block_core( $attributes ) {
 			case 'grid4':
 				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-4.php';
 				wp_enqueue_style( 'post-grid-4' );
+				break;
+
+			case 'grid5':
+				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-5.php';
+				wp_enqueue_style( 'post-grid-5' );
 				break;
 		}
 
@@ -355,5 +360,7 @@ function frhd_enqueue_layout_scripts() {
 	wp_register_style( 'post-grid-3', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-3.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
 
 	wp_register_style( 'post-grid-4', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-4.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
+
+	wp_register_style( 'post-grid-5', plugin_dir_url( __FILE__ ) . 'layouts/assets/post-grid-5.css', array( 'post-block-css' ), POST_BLOCK_VERSION );
 }
 add_action( 'wp_enqueue_scripts', 'frhd_enqueue_layout_scripts' );

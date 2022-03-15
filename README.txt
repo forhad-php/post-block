@@ -3,8 +3,8 @@ Contributors: frohadpro
 Donate link: https://forhad.net/donate/
 Tags: custom post grid, display posts, gutenberg blocks, popular posts, post grid
 Requires at least: 4.5
-Tested up to: 5.8.2
-Stable tag: 2.3.0
+Tested up to: 5.9.2
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ This block provides stunning options to showcase your posts anywhere on the Gute
 
 = Key Features =
 - Option to choose pre designed template.
-- Mximum width of the block.
+- Maximum width of the block.
 - Number of post columns.
 - Post per page view.
 - Spacing of column and row gap.
@@ -70,6 +70,8 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 2. Post Block (Demo 2)
 3. Post Block (Demo 3)
 4. Post Block (Demo 4)
+5. Post Block (Demo 5)
+6. Post Group (Demo 6)
 
 == Changelog ==
 
@@ -110,3 +112,6 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 * Add: Group Image.
 * Add: Equal Height.
 * Add: Read More Button Custom Text.
+
+= 4.0.0 =
+* Add: New Grid Layout.

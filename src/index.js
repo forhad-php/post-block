@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, ColorPalette, useBlockProps } from '@wordpress/block-editor';
-import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, __experimentalInputControl as InputControl } from '@wordpress/components';
+import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, __experimentalInputControl as InputControl, Button, Dropdown } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
@@ -447,6 +447,83 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			);
 		}
 
+		/**
+		 * Post Title Typography.
+		 * @returns Typography fields..
+		 */
+		const FrhdPostTitleTypo = () => (
+			<Dropdown
+				className='frhd__typo-btn'
+				contentClassName='frhd__popover-content'
+				position='bottom right'
+				renderToggle={ ( { isOpen, onToggle } ) => (
+
+					<Button
+						variant='secondary'
+						onClick={ onToggle }
+						aria-expanded={ isOpen }
+					>
+						Post Title Typography
+					</Button>
+				) }
+				renderContent={ () => <div>
+
+					<UnitControl
+						label={ __( 'Set Font Size:' ) }
+						onChange={ (e) => console.log(e) }
+						value={ '18' }
+						className='frhd__typo-field'
+						/>
+
+					<SelectControl
+						label={ __( 'Select Font Weight:' ) }
+						value={ 'bold' }
+						onChange={ (e) => console.log(e) }
+						options={ [
+							{ value: null, label: 'Select a weight', disabled: true },
+							{ value: 'normal', label: 'normal' },
+							{ value: 'bold', label: 'bold' },
+							{ value: 'bolder', label: 'bolder' },
+							{ value: 'lighter', label: 'lighter' },
+							{ value: 'initial', label: 'initial' },
+							{ value: 'inherit', label: 'inherit' },
+						] }
+						className='frhd__typo-field'
+						/>
+
+					<UnitControl
+						label={ __( 'Set Line Height:' ) }
+						onChange={ (e) => console.log(e) }
+						value={ '18' }
+						className='frhd__typo-field'
+						/>
+
+					<UnitControl
+						label={ __( 'Set Letter Spacing:' ) }
+						onChange={ (e) => console.log(e) }
+						value={ '18' }
+						className='frhd__typo-field'
+						/>
+
+					<SelectControl
+						label={ __( 'Set Text Transform:' ) }
+						value={ 'capitalize' }
+						onChange={ (e) => console.log(e) }
+						options={ [
+							{ value: null, label: 'Select a weight', disabled: true },
+							{ value: 'none', label: 'none' },
+							{ value: 'capitalize', label: 'capitalize' },
+							{ value: 'uppercase', label: 'uppercase' },
+							{ value: 'lowercase', label: 'lowercase' },
+							{ value: 'initial', label: 'initial' },
+							{ value: 'inherit', label: 'inherit' },
+						] }
+						className='frhd__typo-field'
+						/>
+				</div> }
+			/>
+		);
+
 		return ([
 			<InspectorControls>
 				<PanelBody
@@ -465,6 +542,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 							{ label: 'Grid 2', value: 'grid2' },
 							{ label: 'Grid 3', value: 'grid3' },
 							{ label: 'Grid 4', value: 'grid4' },
+							{ label: 'Grid 5', value: 'grid5' },
 						]}
 						onChange={ onLayoutChange }
 					/>
@@ -572,11 +650,12 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						className={ hasEqualHeight ? 'frhd__menu-show frhd__pb-unitcontrol' : 'frhd__menu-hide' }
 						/>
 					<Heading
-						className={ 'frhd__pb-heading' }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__pb-heading frhd__pb-heading' }
 						>Set a Read More Text:</Heading>
 					<InputControl
 						value={ readMoreBtnText }
 						onChange={ onReadMoreBtnTxtChange }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 						/>
 				</PanelBody>
 
@@ -611,6 +690,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasPostAuthor }
 						onChange={ setPostAuthor }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -620,6 +700,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasPostDate }
 						onChange={ setPostDate }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -629,6 +710,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasPostComment }
 						onChange={ setPostComment }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -638,6 +720,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasViewCount }
 						onChange={ setViewCount }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -647,6 +730,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasPostTaxonomy }
 						onChange={ setPostTaxonomy }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -674,6 +758,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}
 						checked={ hasReadTime }
 						onChange={ setReadTime }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 					<ToggleControl
 						label={
@@ -697,6 +782,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						}			
 						checked={ hasLoveReact }
 						onChange={ setLoveReact }
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 					/>
 				</PanelBody>
 
@@ -724,17 +810,20 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ ( colorValue ) => setAttributes( { postTitleColor: colorValue } )}
 						/>
 					
-					<strong>{ __( "Posts Taxonomy Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyColor }} ></span></strong>
+					<strong
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Posts Taxonomy Color: " ) }<span className={ 'component-color-indicator' } style={{ backgroundColor: taxonomyColor }} ></span></strong>
 					<ColorPalette
 						value={ taxonomyColor }
 						onChange={ ( colorValue ) => setAttributes( { taxonomyColor: colorValue } )}
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 						/>
 
-					<strong className={ ('grid2' == postLayout || 'grid4' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Taxonomy Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyBGcolor }} ></span></strong>
+					<strong
+						className={ ('grid2' == postLayout || 'grid4' == postLayout || 'grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Taxonomy Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyBGcolor }} ></span></strong>
 					<ColorPalette
 						value={ taxonomyBGcolor }
 						onChange={ ( colorValue ) => setAttributes( { taxonomyBGcolor: colorValue } )}
-						className={ ( 'grid2' == postLayout || 'grid4' == postLayout ) ? 'frhd__menu-hide' : 'frhd__menu-show' }
+						className={ ( 'grid2' == postLayout || 'grid4' == postLayout || 'grid5' == postLayout ) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 						/>
 
 					<strong className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }>{ __( "Taxonomy Prefix Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: taxonomyPrecolor }} ></span></strong>
@@ -751,10 +840,12 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
 						/>
 						
-					<strong>{ __( "Posts Meta Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postMetaColor }} ></span></strong>
+					<strong
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Posts Meta Color: " ) }<span className={ 'component-color-indicator' } style={{ backgroundColor: postMetaColor }} ></span></strong>
 					<ColorPalette
 						value={ postMetaColor }
 						onChange={ ( colorValue ) => setAttributes( { postMetaColor: colorValue } )}
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 						/>
 
 					<strong className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }>{ __( "Date Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postDateBGColor }} ></span></strong>
@@ -764,10 +855,12 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
 						/>
 						
-					<strong>{ __( "Posts Meta Icon Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postMetaIconColor }} ></span></strong>
+					<strong
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }>{ __( "Posts Meta Icon Color: " ) }<span className={ 'component-color-indicator' } style={{ backgroundColor: postMetaIconColor }} ></span></strong>
 					<ColorPalette
 						value={ postMetaIconColor }
 						onChange={ ( colorValue ) => setAttributes( { postMetaIconColor: colorValue } )}
+						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
 						/>
 
 					<strong>{ __( "Posts Description Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postDescColor}} ></span></strong>
@@ -862,6 +955,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					icon={ 'editor-textcolor' }
 					initialOpen={ false }
 					className={ 'frhd__typography-options' }>
+
+					<Heading>Click the button to show a set of typography fields 👇</Heading>
+
+					<FrhdPostTitleTypo />
 
 					<UnitControl
 						onChange={ onTitleFontSizeChange }
