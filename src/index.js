@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, ColorPalette, useBlockProps } from '@wordpress/block-editor';
-import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, __experimentalInputControl as InputControl, Button, Dropdown } from '@wordpress/components';
+import { __experimentalHeading as Heading, __experimentalNumberControl as NumberControl, PanelBody, SelectControl, ToggleControl, RadioControl, __experimentalUnitControl as UnitControl, __experimentalInputControl as InputControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
@@ -196,14 +196,46 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		},
 		hasLoveReact: {
 			type: 'boolean'
-		},
+		}, 
 		titleFontSize: {
 			type: 'string',
 			default: '22px'
 		},
+		titleFontWeight: {
+			type: 'string',
+			default: 'bold'
+		},
+		titleLineHeight: {
+			type: 'string',
+			default: '28px'
+		},
+		titleLetterSpacing: {
+			type: 'string',
+			default: '0px'
+		},
+		titleTextTransform: {
+			type: 'string',
+			default: 'inherit'
+		},
 		metaFontSize: {
 			type: 'string',
 			default: '16px'
+		},
+		metaFontWeight: {
+			type: 'string',
+			default: 'normal'
+		},
+		metaLineHeight: {
+			type: 'string',
+			default: '16px'
+		},
+		metaLetterSpacing: {
+			type: 'string',
+			default: '0px'
+		},
+		metaTextTransform: {
+			type: 'string',
+			default: 'inherit'
 		},
 		metaIconSize: {
 			type: 'string',
@@ -216,6 +248,14 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		buttonFontSize: {
 			type: 'string',
 			default: '16px'
+		},
+		buttonFontWeight: {
+			type: 'string',
+			default: 'normal'
+		},
+		buttonTextTransform: {
+			type: 'string',
+			default: 'inherit'
 		},
 		catFontSize: {
 			type: 'string',
@@ -293,9 +333,19 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			taxonomyPrecolor,
 			titleFontSize,
 			metaFontSize,
+			titleFontWeight,
+			titleLineHeight,
+			titleLetterSpacing,
+			titleTextTransform,
 			metaIconSize,
 			descFontSize,
+			metaFontWeight,
+			metaLineHeight,
+			metaLetterSpacing,
+			metaTextTransform,
 			buttonFontSize,
+			buttonFontWeight,
+			buttonTextTransform,
 			catFontSize,
 			authFontSize,
 			bodyContentColor,
@@ -361,10 +411,6 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		function onPaginationAlignChange( newPagiAlign ) {
 
 			setAttributes({ paginationAlign: newPagiAlign });
-		}
-		function onTitleFontSizeChange( newtitleFontSize ) {
-
-			setAttributes({ titleFontSize: newtitleFontSize });
 		}
 		function onMetaFontSizeChange( newMetaFontSize ) {
 
@@ -447,83 +493,6 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			);
 		}
 
-		/**
-		 * Post Title Typography.
-		 * @returns Typography fields..
-		 */
-		const FrhdPostTitleTypo = () => (
-			<Dropdown
-				className='frhd__typo-btn'
-				contentClassName='frhd__popover-content'
-				position='bottom right'
-				renderToggle={ ( { isOpen, onToggle } ) => (
-
-					<Button
-						variant='secondary'
-						onClick={ onToggle }
-						aria-expanded={ isOpen }
-					>
-						Post Title Typography
-					</Button>
-				) }
-				renderContent={ () => <div>
-
-					<UnitControl
-						label={ __( 'Set Font Size:' ) }
-						onChange={ (e) => console.log(e) }
-						value={ '18' }
-						className='frhd__typo-field'
-						/>
-
-					<SelectControl
-						label={ __( 'Select Font Weight:' ) }
-						value={ 'bold' }
-						onChange={ (e) => console.log(e) }
-						options={ [
-							{ value: null, label: 'Select a weight', disabled: true },
-							{ value: 'normal', label: 'normal' },
-							{ value: 'bold', label: 'bold' },
-							{ value: 'bolder', label: 'bolder' },
-							{ value: 'lighter', label: 'lighter' },
-							{ value: 'initial', label: 'initial' },
-							{ value: 'inherit', label: 'inherit' },
-						] }
-						className='frhd__typo-field'
-						/>
-
-					<UnitControl
-						label={ __( 'Set Line Height:' ) }
-						onChange={ (e) => console.log(e) }
-						value={ '18' }
-						className='frhd__typo-field'
-						/>
-
-					<UnitControl
-						label={ __( 'Set Letter Spacing:' ) }
-						onChange={ (e) => console.log(e) }
-						value={ '18' }
-						className='frhd__typo-field'
-						/>
-
-					<SelectControl
-						label={ __( 'Set Text Transform:' ) }
-						value={ 'capitalize' }
-						onChange={ (e) => console.log(e) }
-						options={ [
-							{ value: null, label: 'Select a weight', disabled: true },
-							{ value: 'none', label: 'none' },
-							{ value: 'capitalize', label: 'capitalize' },
-							{ value: 'uppercase', label: 'uppercase' },
-							{ value: 'lowercase', label: 'lowercase' },
-							{ value: 'initial', label: 'initial' },
-							{ value: 'inherit', label: 'inherit' },
-						] }
-						className='frhd__typo-field'
-						/>
-				</div> }
-			/>
-		);
-
 		return ([
 			<InspectorControls>
 				<PanelBody
@@ -593,10 +562,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					initialOpen={ false }
 					className={ 'frhd__query-control' }
 					>
-					<Heading
-						className={ 'frhd__pb-heading' }
-						>Set one or multiple categories.</Heading>
+					<Heading className={ 'frhd__pb-heading' }>Set one or multiple categories.</Heading>
+
 					<FrhdCategoryListBase />
+
 					<SelectControl
 						label={ __( 'Post Query:' ) }
 						help={ 'The popular post - popularity count from now! You activate the plugin.' }
@@ -663,7 +632,8 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					title={ 'Content Visibility' }
 					icon={ 'format-aside' }
 					initialOpen={ false }
-					className={ 'frhd__content-visibility' }>
+					className={ 'frhd__content-visibility' }
+					>
 					<ToggleControl
 						label={
 							hasPostThumb
@@ -790,7 +760,8 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					title={ 'Color Settings' }
 					icon="admin-appearance"
 					initialOpen={ false }
-					className={ 'frhd__color-picker' }>
+					className={ 'frhd__color-picker' }
+					>
 					<strong>{ __( "Posts Body Background Color: " ) }<span className="component-color-indicator" style={{ backgroundColor: postBodyColor }} ></span></strong>
 					<ColorPalette
 						value={ postBodyColor }
@@ -954,67 +925,211 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					title={ 'Typography' }
 					icon={ 'editor-textcolor' }
 					initialOpen={ false }
-					className={ 'frhd__typography-options' }>
+					className={ 'frhd__typography-options' }
+					>
+					<PanelBody
+						title={ 'Post Title Typography' }
+						initialOpen={ false }
+						className={ 'frhd__panel-inside' }
+						>
+						<UnitControl
+							isUnitSelectTabbable
+							label={ __( 'Post Title Font Size:' ) }
+							value={ titleFontSize }
+							onChange={ ( tValue ) => setAttributes( { titleFontSize: tValue } ) }
+							className='frhd__typo-field'
+							/>
+						<SelectControl
+							label={ __( 'Select Font Weight:' ) }
+							value={ titleFontWeight }
+							onChange={ ( tValue ) => setAttributes( { titleFontWeight: tValue } ) }
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'normal', label: 'normal' },
+								{ value: 'bold', label: 'bold' },
+								{ value: 'bolder', label: 'bolder' },
+								{ value: 'lighter', label: 'lighter' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+						<UnitControl
+							label={ __( 'Set Line Height:' ) }
+							onChange={ ( tValue ) => setAttributes( { titleLineHeight: tValue } )}
+							value={ titleLineHeight }
+							className='frhd__typo-field'
+							/>
+						<UnitControl
+							label={ __( 'Set Letter Spacing:' ) }
+							onChange={ ( tValue ) => setAttributes( { titleLetterSpacing: tValue } )}
+							value={ titleLetterSpacing }
+							className='frhd__typo-field'
+							/>
+						<SelectControl
+							label={ __( 'Set Text Transform:' ) }
+							value={ titleTextTransform }
+							onChange={ ( tValue ) => setAttributes( { titleTextTransform: tValue } )}
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'none', label: 'none' },
+								{ value: 'capitalize', label: 'capitalize' },
+								{ value: 'uppercase', label: 'uppercase' },
+								{ value: 'lowercase', label: 'lowercase' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+					</PanelBody>
 
-					<Heading>Click the button to show a set of typography fields 👇</Heading>
+					<PanelBody
+						title={ 'Post Meta Typography' }
+						initialOpen={ false }
+						className={ 'frhd__panel-inside' }
+						>
+						<UnitControl
+							onChange={ onMetaFontSizeChange }
+							label={ __( 'Meta Font Size:' ) }
+							isUnitSelectTabbable
+							value={ metaFontSize }
+							/>
+						<SelectControl
+							label={ __( 'Select Font Weight:' ) }
+							value={ metaFontWeight }
+							onChange={ ( tValue ) => setAttributes( { metaFontWeight: tValue } ) }
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'normal', label: 'normal' },
+								{ value: 'bold', label: 'bold' },
+								{ value: 'bolder', label: 'bolder' },
+								{ value: 'lighter', label: 'lighter' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+						<UnitControl
+							label={ __( 'Set Line Height:' ) }
+							onChange={ ( tValue ) => setAttributes( { metaLineHeight: tValue } )}
+							value={ metaLineHeight }
+							className='frhd__typo-field'
+							/>
+						<UnitControl
+							label={ __( 'Set Letter Spacing:' ) }
+							onChange={ ( tValue ) => setAttributes( { metaLetterSpacing: tValue } )}
+							value={ metaLetterSpacing }
+							className='frhd__typo-field'
+							/>
+						<SelectControl
+							label={ __( 'Set Text Transform:' ) }
+							value={ metaTextTransform }
+							onChange={ ( tValue ) => setAttributes( { metaTextTransform: tValue } )}
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'none', label: 'none' },
+								{ value: 'capitalize', label: 'capitalize' },
+								{ value: 'uppercase', label: 'uppercase' },
+								{ value: 'lowercase', label: 'lowercase' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+						<UnitControl
+							onChange={ onMetaIconSizeChange }
+							label={ __( 'Meta Icon Size:' ) }
+							isUnitSelectTabbable
+							value={ metaIconSize }
+							/>
+					</PanelBody>
 
-					<FrhdPostTitleTypo />
+					<PanelBody
+						title={ 'Description Typography' }
+						initialOpen={ false }
+						className={ 'frhd__panel-inside' }
+						>
+						<UnitControl
+							onChange={ onDescFontSizeChange }
+							label={ __( 'Description Font Size:' ) }
+							isUnitSelectTabbable
+							value={ descFontSize }
+							/>
+					</PanelBody>
 
-					<UnitControl
-						onChange={ onTitleFontSizeChange }
-						label={ __( 'Post Title Font Size:' ) }
-						isUnitSelectTabbable
-						value={ titleFontSize }
-						/>
+					<PanelBody
+						title={ 'Post Button Typography' }
+						initialOpen={ false }
+						className={ 'frhd__panel-inside' }
+						>
+						<UnitControl
+							onChange={ onBtnFontSizeChange }
+							label={ __( 'Button Font Size:' ) }
+							isUnitSelectTabbable
+							value={ buttonFontSize }
+							/>
+						<SelectControl
+							label={ __( 'Select Font Weight:' ) }
+							value={ buttonFontWeight }
+							onChange={ ( tValue ) => setAttributes( { buttonFontWeight: tValue } ) }
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'normal', label: 'normal' },
+								{ value: 'bold', label: 'bold' },
+								{ value: 'bolder', label: 'bolder' },
+								{ value: 'lighter', label: 'lighter' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+						<SelectControl
+							label={ __( 'Set Text Transform:' ) }
+							value={ buttonTextTransform }
+							onChange={ ( tValue ) => setAttributes( { buttonTextTransform: tValue } )}
+							options={ [
+								{ value: null, label: 'Select a weight', disabled: true },
+								{ value: 'none', label: 'none' },
+								{ value: 'capitalize', label: 'capitalize' },
+								{ value: 'uppercase', label: 'uppercase' },
+								{ value: 'lowercase', label: 'lowercase' },
+								{ value: 'initial', label: 'initial' },
+								{ value: 'inherit', label: 'inherit' },
+							] }
+							className='frhd__typo-field'
+							/>
+					</PanelBody>
 
-					<UnitControl
-						onChange={ onMetaFontSizeChange }
-						label={ __( 'Meta Font Size:' ) }
-						isUnitSelectTabbable
-						value={ metaFontSize }
-						/>
-					
-					<UnitControl
-						onChange={ onMetaIconSizeChange }
-						label={ __( 'Meta Icon Size:' ) }
-						isUnitSelectTabbable
-						value={ metaIconSize }
-						/>
+					<PanelBody
+						title={ 'Category Typography' }
+						initialOpen={ false }
+						className={ 'grid5' == postLayout ? 'frhd__menu-hide' : 'frhd__menu-show frhd__panel-inside' }
+						>
+						<UnitControl
+							onChange={ onCatFontSizeChange }
+							label={ __( 'Category Font Size:' ) }
+							isUnitSelectTabbable
+							value={ catFontSize }
+							/>
+					</PanelBody>
 
-					<UnitControl
-						onChange={ onDescFontSizeChange }
-						label={ __( 'Description Font Size:' ) }
-						isUnitSelectTabbable
-						value={ descFontSize }
-						/>
-
-					<UnitControl
-						onChange={ onBtnFontSizeChange }
-						label={ __( 'Button Font Size:' ) }
-						isUnitSelectTabbable
-						value={ buttonFontSize }
-						/>
-
-					<UnitControl
-						onChange={ onCatFontSizeChange }
-						label={ __( 'Category Font Size:' ) }
-						isUnitSelectTabbable
-						value={ catFontSize }
-						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
-						/>
-
-					<UnitControl
-						onChange={ onAuthFontSizeChange }
-						label={ __( 'Author Font Size:' ) }
-						isUnitSelectTabbable
-						value={ authFontSize }
-						className={ 'grid2' == postLayout ? 'frhd__menu-show' : 'frhd__menu-hide' }
-						/>
+					<PanelBody
+						title={ 'Post Author Typography' }
+						initialOpen={ false }
+						className={ ( 'grid1' == postLayout || 'grid5' == postLayout ) ? 'frhd__menu-hide' : 'frhd__menu-show frhd__panel-inside' }
+						>
+						<UnitControl
+							onChange={ onAuthFontSizeChange }
+							label={ __( 'Author Font Size:' ) }
+							isUnitSelectTabbable
+							value={ authFontSize }
+							/>
+					</PanelBody>
 				</PanelBody>
 			</InspectorControls>,
 
 			<div { ...useBlockProps() }>
-				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth} !important;}.frhd__block-index-${id} .frhd__post-block-article{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;border-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__featured-image img{border-top-left-radius: ${roundedCornerSize}px;border-top-right-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__post-block-container{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {font-size: ${titleFontSize} !important;color: ${postTitleColor} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {font-size: ${metaFontSize};color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {height: ${metaIconSize};width: ${metaIconSize};fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {font-size: ${descFontSize};color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'}}.frhd__block-index-${id} .frhd__post-btn a{font-size: ${buttonFontSize};color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-flex' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
+				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth} !important;}.frhd__block-index-${id} .frhd__post-block-article{flex-basis: calc(100% / ${postCol} - ${colGap}px) !important;background-color: ${postBodyColor} !important;border-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__featured-image img{border-top-left-radius: ${roundedCornerSize}px;border-top-right-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__post-block-container{column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {font-size: ${titleFontSize} !important;font-weight: ${titleFontWeight} !important;line-height: ${titleLineHeight} !important;color: ${postTitleColor} !important;letter-spacing: ${titleLetterSpacing} !important;text-transform: ${titleTextTransform} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {font-size: ${metaFontSize} !important;font-weight: ${metaFontWeight} !important;line-height: ${metaLineHeight} !important;letter-spacing: ${metaLetterSpacing} !important;text-transform: ${metaTextTransform} !important;color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {height: ${metaIconSize} !important;width: ${metaIconSize} !important;fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {font-size: ${descFontSize};color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'};font-size: ${buttonFontSize} !important;font-weight: ${buttonFontWeight} !important;text-transform: ${buttonTextTransform} !important;color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-flex' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
             	<ServerSideRender
                 	block={ "gutenberg-post-view/post-block" }
 					className={ 'frhd__block-index-' + id } />

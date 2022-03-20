@@ -16,6 +16,7 @@ for (var i = 0; i < elemHearts.length; i++) {
 
 
 (function( $ ) {
+
 	'use strict';
 
     function loadTakenSeats() {
@@ -45,7 +46,7 @@ for (var i = 0; i < elemHearts.length; i++) {
         saveTakenSeats(takenSeats);
     }
 
-    $(function(){
+    $(function() {
 
         // restore taken seats
         $.each(loadTakenSeats(), function(i, seat) {
@@ -65,6 +66,7 @@ for (var i = 0; i < elemHearts.length; i++) {
                 untakeSeat(seat);
             }
         });
+
     });
 
 })( jQuery );

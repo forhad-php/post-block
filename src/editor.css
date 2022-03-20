@@ -71,6 +71,9 @@
 .frhd__color-picker strong span {
     margin-bottom: -4px;
 }
+.frhd__color-picker button.components-color-palette__custom-color {
+    text-align: center;
+}
 .frhd__alignment-options .components-panel__icon {
     font-size: 25px;
     line-height: 22px;
@@ -214,4 +217,12 @@ span.frhd__cat-name a:hover {
     height: 16px;
     margin-right: 5px;
     fill: #d32f2f;
+}
+
+/* Typography Fields */
+.components-panel__body.frhd__panel-inside {
+    max-width: 220px;
+    background: rgb(240 248 255 / 50%);
+    border: 1px solid #e0e0e0;
+    margin: 0 auto 5px;
 }

@@ -81,3 +81,7 @@ article.frhd__post-block-article:hover .frhd__article-overlay {
     align-items: flex-end;
     justify-content: center;
 }
+.frhd__btn:hover svg {
+    box-shadow: 0 0 10px 0px rgb(255 255 255 / 50%);
+    transition: .3s;
+}

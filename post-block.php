@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: Forhad
  * Author URI: https://www.forhad.net
- * Version: 4.0.0
+ * Version: 4.1.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '4.0.0' );
+define( 'POST_BLOCK_VERSION', '4.1.0' );
 
 /**
  * Get Block Posts Attributes.
@@ -73,10 +73,20 @@ function frhd_render_block_core( $attributes ) {
 	$post_view_count            = isset( $attributes['hasViewCount'] ) ? $attributes['hasViewCount'] : true;
 	$post_love_react            = isset( $attributes['hasLoveReact'] ) ? $attributes['hasLoveReact'] : false;
 	$post_title_font_size       = isset( $attributes['titleFontSize'] ) ? $attributes['titleFontSize'] : '22px';
+	$post_title_font_weight     = isset( $attributes['titleFontWeight'] ) ? $attributes['titleFontWeight'] : 'bold';
+	$post_title_line_height     = isset( $attributes['titleLineHeight'] ) ? $attributes['titleLineHeight'] : '28px';
+	$post_title_letter_spacing  = isset( $attributes['titleLetterSpacing'] ) ? $attributes['titleLetterSpacing'] : '0px';
+	$post_title_text_transform  = isset( $attributes['titleTextTransform'] ) ? $attributes['titleTextTransform'] : 'inherit';
 	$post_meta_font_size        = isset( $attributes['metaFontSize'] ) ? $attributes['metaFontSize'] : '16px';
+	$post_meta_font_weight      = isset( $attributes['metaFontWeight'] ) ? $attributes['metaFontWeight'] : 'normal';
+	$post_meta_line_height      = isset( $attributes['metaLineHeight'] ) ? $attributes['metaLineHeight'] : '16px';
+	$post_meta_letter_spacing   = isset( $attributes['metaLetterSpacing'] ) ? $attributes['metaLetterSpacing'] : '0px';
+	$post_meta_text_transform   = isset( $attributes['metaTextTransform'] ) ? $attributes['metaTextTransform'] : 'inherit';
 	$post_meta_icon_size        = isset( $attributes['metaIconSize'] ) ? $attributes['metaIconSize'] : '15px';
 	$post_desc_font_size        = isset( $attributes['descFontSize'] ) ? $attributes['descFontSize'] : '19px';
 	$post_btn_font_size         = isset( $attributes['buttonFontSize'] ) ? $attributes['buttonFontSize'] : '16px';
+	$post_btn_font_weight       = isset( $attributes['buttonFontWeight'] ) ? $attributes['buttonFontWeight'] : 'normal';
+	$post_btn_text_transform    = isset( $attributes['buttonTextTransform'] ) ? $attributes['buttonTextTransform'] : 'inherit';
 	$post_thumb_equal_show      = isset( $attributes['hasEqualHeight'] ) ? $attributes['hasEqualHeight'] : false;
 	$post_thumb_equal_size      = isset( $attributes['equalHeightSize'] ) ? $attributes['equalHeightSize'] : '200px';
 
