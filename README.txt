@@ -118,3 +118,5 @@ No, it works only with “WordPress Gutenberg Block Editor”.
 
 = 4.1.0 =
 * Add: Custom Typography.
+* Fix: Inline meta (Grid 1)
+* Fix: Button color (Grid 5)
