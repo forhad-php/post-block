@@ -482,7 +482,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 				<SelectControl
 					multiple
 					label={ 'Category List:' }
-					help={ 'To select multiple categories press \'CTRL\'' }
+					help={ 'To select or deselect multiple categories press \'CTRL\'' }
 					value={ theCategories }
 					options={ GMcategories.map( ( GMcategory ) => (
 								{ label: GMcategory.name, value: GMcategory.id }
@@ -512,6 +512,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 							{ label: 'Grid 3', value: 'grid3' },
 							{ label: 'Grid 4', value: 'grid4' },
 							{ label: 'Grid 5', value: 'grid5' },
+							{ label: 'Grid 6', value: 'grid6' },
 						]}
 						onChange={ onLayoutChange }
 					/>
