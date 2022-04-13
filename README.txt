@@ -4,7 +4,7 @@ Donate link: https://forhad.net/donate/
 Tags: gutenberg post blocks, display posts, gutenberg blocks, popular posts, post grid, post grid and filter ultimate, WP Ultimate Post Grid
 Requires at least: 4.5
 Tested up to: 5.9.2
-Stable tag: 5.0.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,9 +32,9 @@ Since no coding skills are required to use it all you have to do is install and 
 
 = KEY FEATURES =
 
-1. Pre-Designed Templates
+**1. Pre-Designed Templates**
 
-2. Global Control
+**2. Global Control**
 - Post Layout
 - Maximum Width Of The Block
 - Column Post
@@ -44,7 +44,7 @@ Since no coding skills are required to use it all you have to do is install and 
 - Rounded Corner Size
 - Excerpt Word Count
 
-3. Query
+**3. Query**
 - Set Category List
 - Post Query (Random Post Or Most Popular Post)
 - Ascending Or Descending Post Order
@@ -52,7 +52,7 @@ Since no coding skills are required to use it all you have to do is install and 
 - Enable Or Disable Equal Size
 - Set A Read More Text
 
-4. Content Visibility
+**4. Content Visibility**
 - Show/Hide Post Thumbnail
 - Show/Hide Post Title
 - Show/Hide Post Author
@@ -66,19 +66,19 @@ Since no coding skills are required to use it all you have to do is install and 
 - Show/Hide Pagination
 - Show/Hide Love React
 
-5. Color Settings
+**5. Color Settings**
 - Advanced color options with the color palette from your theme.
 
-6. Pagination Alignment
+**6. Pagination Alignment**
 
-7. Typography
+**7. Typography**
 - Post Title Typography
 - Post Meta Typography
 - Description Typography
 - Post Button Typography
 - Category Typography
 
-8. Post group
+**8. Post group**
 - Set Category list
 - Set A Group Title
 - Total Post Show
@@ -86,7 +86,7 @@ Since no coding skills are required to use it all you have to do is install and 
 - Select A Group Image
 - Group Image Size
 - Enable/Disable Custom Height
-And more………..
+**And more………..**
 
 = WHAT IS THE DIFFERENCE BETWEEN POST BLOCK AND POST GROUP? =
 The post block provides you with the option of inserting a list or grid of blog posts on any page. This feature is great for displaying excerpts of a post and multiple posts on a single page with a professional and appealing look. 
@@ -245,3 +245,6 @@ Our expert team members are available 24/7 to help you out with any issues regar
 
 = 5.0.0 =
 * Add: New Grid Layout.
+
+= 5.0.1 =
+* Fix: Pagination not working on home page.

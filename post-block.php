@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: WPQode
  * Author URI: https://www.wpqode.com
- * Version: 5.0.0
+ * Version: 5.0.1
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '5.0.0' );
+define( 'POST_BLOCK_VERSION', '5.0.1' );
 
 /**
  * Get Block Posts Attributes.
@@ -97,14 +97,23 @@ function frhd_render_block_core( $attributes ) {
 	}
 
 	// Protect against arbitrary paged values.
-	$frhd_paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+	// $frhd_paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+	if ( is_front_page() ) {
+
+		$frhd_paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+	} else {
+
+		$frhd_paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+	}
 
 	$args = array(
 		'posts_per_page' => $posts_per_page,
+		'post_status'    => 'publish',
 		'post_type'      => 'post',
-		'paged'          => $frhd_paged,
 		'cat'            => $post_categories,
 		'order'          => $post_order,
+		'orderby'        => 'date',
+		'paged'          => $frhd_paged,
 	);
 
 	if ( 'popular' == $post_query ) {
@@ -152,6 +161,29 @@ function frhd_render_block_core( $attributes ) {
 				break;
 		}
 
+		// Pagination.
+		if ( $post_pagination ) {
+
+			$frhd_big        = 999999999; // Need an unlikely integer.
+			$frhd_page_limit = max( 1, $frhd_post_query->max_num_pages );
+			// $frhd_page_limit = min( 2, $frhd_post_query->max_num_pages ); // 2 = page limit.
+			$frhd_page_limit = isset( $frhd_page_limit ) ? $frhd_page_limit : $posts_per_page;
+
+			echo '<div class="frhd__paginate">';
+			$frhd_arg = array(
+				'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
+				'format'    => '?paged=%#%',
+				'current'   => $frhd_paged,
+				'total'     => $frhd_page_limit,
+				'prev_next' => true,
+				'prev_text' => __( '«' ),
+				'next_text' => __( '»' ),
+			);
+			echo wp_kses_post( paginate_links( $frhd_arg ) );
+			echo '</div>'; // frhd__paginate.
+			echo '</div>'; // frhd__post-block-wrapper.
+		}
+
 		return ob_get_clean(); // Turn off ouput buffer and print output.
 
 	} else {
@@ -192,21 +224,21 @@ function frhd_register_block() {
 		plugins_url( 'build/index.js', __FILE__ ),
 		$asset_file['dependencies'],
 		filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ),
-		true,
+		true
 	);
 
 	wp_register_style(
 		'post-block-editor',
 		plugins_url( 'src/editor.css', __FILE__ ),
 		array( 'wp-edit-blocks' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/editor.css' ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/editor.css' )
 	);
 
 	wp_register_style(
 		'post-block-css',
 		plugins_url( 'src/style.css', __FILE__ ),
 		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/style.css' ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/style.css' )
 	);
 
 	wp_register_script(
@@ -214,7 +246,7 @@ function frhd_register_block() {
 		plugins_url( 'src/script.js', __FILE__ ),
 		array( 'jquery' ),
 		filemtime( plugin_dir_path( __FILE__ ) . 'src/script.js' ),
-		true,
+		true
 	);
 
 	$rbt_args = array(
@@ -252,13 +284,13 @@ function frhd_register_block() {
 		'post-group-editor',
 		plugins_url( 'src/block-post-cat/post-group-editor.css', __FILE__ ),
 		array( 'wp-edit-blocks' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group-editor.css' ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group-editor.css' )
 	);
 	wp_register_style(
 		'post-group-css',
 		plugins_url( 'src/block-post-cat/post-group.css', __FILE__ ),
 		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group.css' ),
+		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group.css' )
 	);
 
 	/**

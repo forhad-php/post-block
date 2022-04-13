@@ -104,22 +104,3 @@ $posts_excerpt_word_count     = isset( $attributes['excerptWordCount'] ) ? $attr
 		wp_reset_postdata();
 		?>
 	</div>
-	<?php
-	// Pagination.
-	if ( $post_pagination ) {
-
-		$frhd_big = 999999999; // Need an unlikely integer.
-		echo '<div class="frhd__paginate">';
-		$frhd_arg = array(
-			'base'      => str_replace( $frhd_big, '%#%', esc_url( get_pagenum_link( $frhd_big ) ) ),
-			'format'    => '?paged=%#%',
-			'current'   => max( 1, get_query_var( 'paged' ) ),
-			'total'     => $frhd_post_query->max_num_pages,
-			'prev_text' => __( '«' ),
-			'next_text' => __( '»' ),
-		);
-		echo wp_kses_post( paginate_links( $frhd_arg ) );
-		echo '</div>'; // frhd_paginate.
-	}
-	?>
-</div>
