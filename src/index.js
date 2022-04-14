@@ -15,6 +15,11 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 	icon: icons.postlayoutsicn,
 	category: 'text',
 	keywords: [ __( 'latest' ), __( 'posts' ), __( 'grid' ) ],
+	example: {
+		attributes: {
+			author: 'Forhad',
+		},
+	},
 	attributes: {
 		id: {
             type: 'string'
@@ -131,6 +136,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			type: 'string',
 			default: 'DESC'
 		},
+		postOrderBy: {
+			type: 'string',
+			default: 'date'
+		},
 		colGap: {
 			type: 'string',
 			default: '15'
@@ -189,6 +198,21 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		hasPostPagin: {
 			type: 'boolean',
 			default: 'true'
+		},
+		paginationLimit: {
+			type: 'string',
+		},
+		hasPagPrevNextBtn: {
+			type: 'boolean',
+			default: 'true'
+		},
+		pagPrevBtnText: {
+			type: 'string',
+			default: '«'
+		},
+		pagNextBtnText: {
+			type: 'string',
+			default: '»'
 		},
 		hasViewCount: {
 			type: 'boolean',
@@ -311,6 +335,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			theCategories,
 			postQuery,
 			postOrder,
+			postOrderBy,
 			colGap,
 			rowGap,
 			roundedCornerSize,
@@ -326,6 +351,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			hasPostbtn,
 			hasReadTime,
 			hasPostPagin,
+			paginationLimit,
+			hasPagPrevNextBtn,
+			pagPrevBtnText,
+			pagNextBtnText,
 			hasViewCount,
 			hasLoveReact,
 			taxonomyColor,
@@ -388,6 +417,10 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 
 			setAttributes({ postOrder: newPostOrder });
 		}
+		function onPostOrderByChange( newPostOrderBy ) {
+
+			setAttributes({ postOrderBy: newPostOrderBy });
+		}
 		function onColGapChange( newColGap ) {
 
 			setAttributes({ colGap: newColGap });
@@ -407,6 +440,18 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		function onPostThumbSizeChange( newThumbSize ) {
 
 			setAttributes({ postThumbSize: newThumbSize });
+		}
+		function onPaginationLimitChange( newPagiLimit ) {
+
+			setAttributes({ paginationLimit: newPagiLimit });
+		}
+		function onPagPrevBtnTxtChange( newPagPrevTxt ) {
+
+			setAttributes({ pagPrevBtnText: newPagPrevTxt });
+		}
+		function onPagNextBtnTxtChange( newPagNextTxt ) {
+
+			setAttributes({ pagNextBtnText: newPagNextTxt });
 		}
 		function onPaginationAlignChange( newPagiAlign ) {
 
@@ -458,6 +503,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 		const setPostbtn = () => setAttributes( { hasPostbtn: ! hasPostbtn } );
 		const setReadTime = () => setAttributes( { hasReadTime: ! hasReadTime } );
 		const setPostPagin = () => setAttributes( { hasPostPagin: ! hasPostPagin } );
+		const setPagPrevNextBtn = () => setAttributes( { hasPagPrevNextBtn: ! hasPagPrevNextBtn } );
 		const setViewCount = () => setAttributes( { hasViewCount: ! hasViewCount } );
 		const setLoveReact = () => setAttributes( { hasLoveReact: ! hasLoveReact } );
 		const setEqualHeight = () => setAttributes( { hasEqualHeight: ! hasEqualHeight } );
@@ -579,6 +625,27 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						onChange={ onPostQueryChange }
 					/>
 					<SelectControl
+						label={ __( 'Post By:' ) }
+						value={ postOrderBy }
+						options={[
+							{ value: null, label: 'Select a parameter:', disabled: true },
+							{ label: 'None', value: 'none' },
+							{ label: 'ID', value: 'ID' },
+							{ label: 'Author', value: 'author' },
+							{ label: 'Title', value: 'title' },
+							{ label: 'Type', value: 'type' },
+							{ label: 'Date', value: 'date' },
+							{ label: 'Modified', value: 'modified' },
+							{ label: 'Parent', value: 'parent' },
+							{ label: 'Random', value: 'rand' },
+							{ label: 'Comment Count', value: 'comment_count' },
+							{ label: 'Relevance', value: 'relevance' },
+							{ label: 'Menu Order', value: 'menu_order' },
+						]}
+						onChange={ onPostOrderByChange }
+						className={ ( 'popular' == postQuery ) ? 'frhd__menu-hide' : 'frhd__menu-show' }
+					/>
+					<SelectControl
 						label={ __( 'Post Order:' ) }
 						help={ 'Designates the ascending or descending order of the post query.' }
 						value={ postOrder }
@@ -619,13 +686,65 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						value={ equalHeightSize }
 						className={ hasEqualHeight ? 'frhd__menu-show frhd__pb-unitcontrol' : 'frhd__menu-hide' }
 						/>
+				</PanelBody>
+
+				<PanelBody
+					title={ 'Pagination' }
+					icon={ 'ellipsis' }
+					initialOpen={ false }
+					className={ 'frhd__pagination-option' }
+					>
+					<ToggleControl
+						label={
+							hasPostPagin
+								? 'Show Pagination.'
+								: 'Hide Pagination.'
+						}
+						checked={ hasPostPagin }
+						onChange={ setPostPagin }
+					/>
+					<NumberControl
+						label={ __( 'Page Limit:' ) }
+						onChange={ onPaginationLimitChange }
+						value={ paginationLimit }
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+					/>
+					<ToggleControl
+						label={
+							hasPagPrevNextBtn
+								? 'Show Preview/Next Button.'
+								: 'Hide Preview/Next Button.'
+						}
+						checked={ hasPagPrevNextBtn }
+						onChange={ setPagPrevNextBtn }
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+					/>
 					<Heading
-						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__pb-heading frhd__pb-heading' }
-						>Set a Read More Text:</Heading>
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						>Set Preview Button Text:</Heading>
 					<InputControl
-						value={ readMoreBtnText }
-						onChange={ onReadMoreBtnTxtChange }
-						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
+						value={ pagPrevBtnText }
+						onChange={ onPagPrevBtnTxtChange }
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						/>
+					<Heading
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						>Set Next Button Text:</Heading>
+					<InputControl
+						value={ pagNextBtnText }
+						onChange={ onPagNextBtnTxtChange }
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
+						/>
+					<RadioControl
+						label={ 'Pagination Alignment' }
+						selected={ paginationAlign }
+						options={ [
+							{ label: 'Left', value: 'left' },
+							{ label: 'Center', value: 'center' },
+							{ label: 'Right', value: 'right' },
+						] }
+						onChange={ onPaginationAlignChange }
+						className={ hasPostPagin ? 'frhd__menu-show' : 'frhd__menu-hide' }
 						/>
 				</PanelBody>
 
@@ -730,15 +849,6 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 						checked={ hasReadTime }
 						onChange={ setReadTime }
 						className={ ('grid5' == postLayout) ? 'frhd__menu-hide' : 'frhd__menu-show' }
-					/>
-					<ToggleControl
-						label={
-							hasPostPagin
-								? 'Show Pagination.'
-								: 'Hide Pagination.'
-						}
-						checked={ hasPostPagin }
-						onChange={ setPostPagin }
 					/>
 					<ToggleControl
 						label={
@@ -901,24 +1011,6 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 					<ColorPalette
 						value={ pagiActiveBGColor }
 						onChange={ ( colorValue ) => setAttributes( { pagiActiveBGColor: colorValue } )}
-						/>
-				</PanelBody>
-
-				<PanelBody
-					title={ 'Alignment' }
-					icon={ 'leftright' }
-					initialOpen={ false }
-					className={ 'frhd__alignment-options' }>
-					
-					<RadioControl
-						label={ 'Pagination Alignment' }
-						selected={ paginationAlign }
-						options={ [
-							{ label: 'Left', value: 'left' },
-							{ label: 'Center', value: 'center' },
-							{ label: 'Right', value: 'right' },
-						] }
-						onChange={ onPaginationAlignChange }
 						/>
 				</PanelBody>
 
@@ -1130,7 +1222,7 @@ registerBlockType( 'gutenberg-post-view/post-block', {
 			</InspectorControls>,
 
 			<div { ...useBlockProps() }>
-				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth} !important;}.frhd__block-index-${id} .frhd__post-block-article{background-color: ${postBodyColor} !important;border-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__featured-image img{border-top-left-radius: ${roundedCornerSize}px;border-top-right-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__post-block-container{grid-template-columns: repeat(${postCol}, 1fr);column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {font-size: ${titleFontSize} !important;font-weight: ${titleFontWeight} !important;line-height: ${titleLineHeight} !important;color: ${postTitleColor} !important;letter-spacing: ${titleLetterSpacing} !important;text-transform: ${titleTextTransform} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {font-size: ${metaFontSize} !important;font-weight: ${metaFontWeight} !important;line-height: ${metaLineHeight} !important;letter-spacing: ${metaLetterSpacing} !important;text-transform: ${metaTextTransform} !important;color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {height: ${metaIconSize} !important;width: ${metaIconSize} !important;fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {font-size: ${descFontSize};color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'};font-size: ${buttonFontSize} !important;font-weight: ${buttonFontWeight} !important;text-transform: ${buttonTextTransform} !important;color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-flex' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
+				<Style>{`.frhd__block-index-${id} .frhd__post-block-wrapper{max-width: ${maxWidth} !important;}.frhd__block-index-${id} .frhd__post-block-article{background-color: ${postBodyColor} !important;border-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__featured-image img{border-top-left-radius: ${roundedCornerSize}px;border-top-right-radius: ${roundedCornerSize}px;}.frhd__block-index-${id} .frhd__post-block-container{grid-template-columns: repeat(${postCol}, 1fr);column-gap: ${colGap}px;row-gap: ${rowGap}px !important;}.frhd__block-index-${id} .frhd__featured-image img{display: ${hasPostThumb ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title{display: ${hasPostTitle ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-title a {font-size: ${titleFontSize} !important;font-weight: ${titleFontWeight} !important;line-height: ${titleLineHeight} !important;color: ${postTitleColor} !important;letter-spacing: ${titleLetterSpacing} !important;text-transform: ${titleTextTransform} !important;}.frhd__block-index-${id} .frhd__post-meta, .frhd__block-index-${id} .frhd__post-meta a {font-size: ${metaFontSize} !important;font-weight: ${metaFontWeight} !important;line-height: ${metaLineHeight} !important;letter-spacing: ${metaLetterSpacing} !important;text-transform: ${metaTextTransform} !important;color: ${postMetaColor} !important;}.frhd__block-index-${id} .frhd__post-meta svg {height: ${metaIconSize} !important;width: ${metaIconSize} !important;fill: ${postMetaIconColor} !important;}.frhd__block-index-${id} .frhd__post-author{display: ${hasPostAuthor ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-date{display: ${hasPostDate ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-view{display: ${hasViewCount ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-wrap{display: ${hasPostTaxonomy ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__cat-name a {color: ${taxonomyColor} !important;background-color: ${taxonomyBGcolor} !important;}.frhd__block-index-${id} .frhd__post-excerpt{display: ${hasPostExcerpt ? 'block' : 'none'}}.frhd__block-index-${id} .frhd__post-excerpt p {font-size: ${descFontSize};color: ${postDescColor} !important;}.frhd__block-index-${id} .frhd__post-btn a{display: ${hasPostbtn ? 'inline-block' : 'none'};font-size: ${buttonFontSize} !important;font-weight: ${buttonFontWeight} !important;text-transform: ${buttonTextTransform} !important;color: ${postBtnTextColor} !important;background: ${postBtnColor} !important;}.frhd__block-index-${id} .frhd__post-btn a:hover {color: ${hoverBtnTextColor} !important;background: ${hoverBtnColor} !important;}.frhd__block-index-${id} .frhd__reading-time {display: ${hasReadTime ? 'inline-flex' : 'none'};color: ${readingTimeColor} !important;}.frhd__block-index-${id} .frhd__reading-time svg {fill: ${readingTimeIconColor} !important;}.frhd__block-index-${id} .frhd__paginate{display: ${hasPostPagin ? 'block' : 'none'}}.frhd__block-index-${id} .next.page-numbers{display: ${hasPagPrevNextBtn ? 'inline-block' : 'none'}}.frhd__block-index-${id} .frhd__paginate {text-align: ${paginationAlign} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers {color: ${paginationNumColor} !important;background: ${paginationBGColor} !important;}.frhd__block-index-${id} .frhd__paginate .page-numbers.current {color: ${pagiActiveNumColor} !important;background: ${pagiActiveBGColor} !important;}`}</Style>
             	<ServerSideRender
                 	block={ "gutenberg-post-view/post-block" }
 					className={ 'frhd__block-index-' + id } />

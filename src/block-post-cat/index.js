@@ -12,6 +12,11 @@ registerBlockType( 'category-post-view/post-group', {
 	icon: icons.postlayoutsicn,
 	category: 'text',
 	keywords: [ __( 'latest' ), __( 'posts' ), __( 'grid' ) ],
+	example: {
+		attributes: {
+			author: 'Forhad',
+		},
+	},
 
 	edit({ clientId, attributes, setAttributes }) {
 

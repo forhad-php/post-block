@@ -12,7 +12,7 @@
 $posts_row_gap                = isset( $attributes['rowGap'] ) ? $attributes['rowGap'] : '15';
 $rounded_corner_size          = isset( $attributes['roundedCornerSize'] ) ? $attributes['roundedCornerSize'] : '5';
 $post_taxonomy_color          = isset( $attributes['taxonomyColor'] ) ? $attributes['taxonomyColor'] : '#000000';
-$post_pagination_bg_color     = isset( $attributes['paginationBGColor'] ) ? $attributes['paginationBGColor'] : '#d32f2f';
+$post_pagination_bg_color     = isset( $attributes['paginationBGColor'] ) ? $attributes['paginationBGColor'] : '#03334e';
 $post_excerpt_show            = isset( $attributes['hasPostExcerpt'] ) ? $attributes['hasPostExcerpt'] : true;
 $reading_time_show            = isset( $attributes['hasReadTime'] ) ? $attributes['hasReadTime'] : true;
 $post_reading_time_color      = isset( $attributes['readingTimeColor'] ) ? $attributes['readingTimeColor'] : '#ef5350';

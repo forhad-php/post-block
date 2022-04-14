@@ -223,3 +223,29 @@ span.frhd__cat-name a:hover {
     border: 1px solid #e0e0e0;
     margin: 0 auto 5px;
 }
+
+/* Pagination Tab */
+.block-editor-block-inspector .frhd__pagination-option .components-base-control {
+    margin-bottom: 0;
+}
+.block-editor-block-inspector .frhd__pagination-option .components-number-control {
+    max-width: 80px;
+    margin-bottom: 16px;
+}
+.frhd__pagination-option h2 {
+    margin-bottom: 0;
+}
+.frhd__pagination-option .components-input-control {
+    margin-bottom: 18px;
+}
+
+/* Responsive */
+/* 500px for Example Preview */
+@media (max-width: 500px) {
+    .frhd__post-block-container {
+        display: block;
+    }
+    .frhd__post-block-container .frhd__post-block-article:not(:first-child) {
+        display: none;
+    }
+}

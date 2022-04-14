@@ -58,6 +58,7 @@ function frhd_render_block_core( $attributes ) {
 	$post_categories            = isset( $attributes['theCategories'] ) ? $attributes['theCategories'] : 'random';
 	$post_query                 = isset( $attributes['postQuery'] ) ? $attributes['postQuery'] : '';
 	$post_order                 = isset( $attributes['postOrder'] ) ? $attributes['postOrder'] : 'DESC';
+	$post_order_by              = isset( $attributes['postOrderBy'] ) ? $attributes['postOrderBy'] : 'date';
 	$post_thumb_size            = isset( $attributes['postThumbSize'] ) ? $attributes['postThumbSize'] : 'medium';
 	$posts_col_gap              = isset( $attributes['colGap'] ) ? $attributes['colGap'] : '15';
 	$posts_excerpt_word_count   = isset( $attributes['excerptWordCount'] ) ? $attributes['excerptWordCount'] : '19';
@@ -70,6 +71,10 @@ function frhd_render_block_core( $attributes ) {
 	$post_taxonomy_show         = isset( $attributes['hasPostTaxonomy'] ) ? $attributes['hasPostTaxonomy'] : true;
 	$post_btn_show              = isset( $attributes['hasPostbtn'] ) ? $attributes['hasPostbtn'] : true;
 	$post_pagination            = isset( $attributes['hasPostPagin'] ) ? $attributes['hasPostPagin'] : true;
+	$post_pagination_limit      = isset( $attributes['paginationLimit'] ) ? $attributes['paginationLimit'] : '';
+	$has_pag_prev_next_btn      = isset( $attributes['hasPagPrevNextBtn'] ) ? $attributes['hasPagPrevNextBtn'] : true;
+	$paginat_prev_btn_text      = isset( $attributes['pagPrevBtnText'] ) ? $attributes['pagPrevBtnText'] : '«';
+	$paginat_next_btn_text      = isset( $attributes['pagNextBtnText'] ) ? $attributes['pagNextBtnText'] : '»';
 	$post_view_count            = isset( $attributes['hasViewCount'] ) ? $attributes['hasViewCount'] : true;
 	$post_love_react            = isset( $attributes['hasLoveReact'] ) ? $attributes['hasLoveReact'] : false;
 	$post_title_font_size       = isset( $attributes['titleFontSize'] ) ? $attributes['titleFontSize'] : '22px';
@@ -112,7 +117,6 @@ function frhd_render_block_core( $attributes ) {
 		'post_type'      => 'post',
 		'cat'            => $post_categories,
 		'order'          => $post_order,
-		'orderby'        => 'date',
 		'paged'          => $frhd_paged,
 	);
 
@@ -120,6 +124,9 @@ function frhd_render_block_core( $attributes ) {
 
 		$args['orderby']  = 'meta_value_num';
 		$args['meta_key'] = 'post_views_count';
+	} else {
+
+		$args['orderby'] = $post_order_by;
 	}
 
 	$frhd_post_query = new WP_Query( $args );
@@ -164,9 +171,15 @@ function frhd_render_block_core( $attributes ) {
 		// Pagination.
 		if ( $post_pagination ) {
 
-			$frhd_big        = 999999999; // Need an unlikely integer.
-			$frhd_page_limit = max( 1, $frhd_post_query->max_num_pages );
-			// $frhd_page_limit = min( 2, $frhd_post_query->max_num_pages ); // 2 = page limit.
+			$frhd_big = 999999999; // Need an unlikely integer.
+
+			if ( $post_pagination_limit ) {
+
+				$frhd_page_limit = min( $post_pagination_limit, $frhd_post_query->max_num_pages );
+			} else {
+
+				$frhd_page_limit = max( 1, $frhd_post_query->max_num_pages );
+			}
 			$frhd_page_limit = isset( $frhd_page_limit ) ? $frhd_page_limit : $posts_per_page;
 
 			echo '<div class="frhd__paginate">';
@@ -175,9 +188,9 @@ function frhd_render_block_core( $attributes ) {
 				'format'    => '?paged=%#%',
 				'current'   => $frhd_paged,
 				'total'     => $frhd_page_limit,
-				'prev_next' => true,
-				'prev_text' => __( '«' ),
-				'next_text' => __( '»' ),
+				'prev_next' => $has_pag_prev_next_btn,
+				'prev_text' => $paginat_prev_btn_text,
+				'next_text' => $paginat_next_btn_text,
 			);
 			echo wp_kses_post( paginate_links( $frhd_arg ) );
 			echo '</div>'; // frhd__paginate.

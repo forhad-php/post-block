@@ -244,7 +244,12 @@ Our expert team members are available 24/7 to help you out with any issues regar
 * Fix: Button color (Grid 5)
 
 = 5.0.0 =
-* Add: New Grid Layout.
+* Add: New Grid Layout (Grid 6).
+* Fix: Pagination Limit.
+* Fix: Pagination Preview-Nex Custom Text.
+* Fix: Pagination current button color not changing.
+* Fix: Bottom not aligned on Grid 2.
 
 = 5.0.1 =
 * Fix: Pagination not working on home page.
+* Fix: Feature image gliding.
