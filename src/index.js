@@ -7,7 +7,11 @@ import { useState } from '@wordpress/element';
 import icons from '../icons/icons';
 import Style from 'style-it';
 
+/**
+ * Initial Blocks.
+ */
 import './block-post-cat';
+import './block-post-trisec';
 
 registerBlockType( 'gutenberg-post-view/post-block', {
 	title: __( 'Post Block' ),

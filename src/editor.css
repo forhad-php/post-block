@@ -1,4 +1,7 @@
 /* Reset */
+.frhd__post-block-wrapper > * {
+    pointer-events: none;
+}
 .frhd__post-block-wrapper h2,
 .frhd__post-block-wrapper p {
     margin: 0;

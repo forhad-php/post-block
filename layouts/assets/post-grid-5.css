@@ -1,8 +1,8 @@
 /* Reset */
-.frhd__article-body {
+.frhd__post-grid-5 .frhd__article-body {
     padding: 0;
 }
-a.frhd__article-anchor {
+.frhd__post-grid-5 .frhd__article-anchor {
     background-color: #03334e;
     display: block;
     border-radius: 15px;
@@ -10,11 +10,11 @@ a.frhd__article-anchor {
     margin-right: auto;
     position: relative;
 }
-.frhd__article-body {
+.frhd__post-grid-5 .frhd__article-body {
     height: 360px;
     position: relative;
 }
-.frhd__article-body img {
+.frhd__post-grid-5 .frhd__article-body img {
     object-fit: cover;
     height: 75%;
     width: 100%;
@@ -22,11 +22,11 @@ a.frhd__article-anchor {
     top: 0;
     left: 0;
 }
-.frhd__post-block-article {
+.frhd__post-grid-5 .frhd__post-block-article {
     position: relative;
     overflow: hidden;
 }
-.frhd__article-overlay {
+.frhd__post-grid-5 .frhd__article-overlay {
     background-color: #03334e;
     display: flex;
     flex-direction: column;

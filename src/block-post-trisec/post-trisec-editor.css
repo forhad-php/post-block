@@ -1,0 +1,68 @@
+/* Reset */
+.frhd__trisec-wrapper > * {
+    pointer-events: none;
+}
+
+/* Post Set Radio Styles */
+.frhd__trisec-post-set {
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.frhd__trisec-post-set input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+.frhd__trisec-post-set input[type=radio]:checked + label {
+    position: relative;
+    color: #ccc8ce;
+    background: #675f6b;
+}
+.frhd__trisec-post-set input[type=radio]:checked + label:after {
+    position: absolute;
+    right: 9px;
+    top: 7px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    color: #8fff8f;
+    font-size: 10px;
+    line-height: 15px;
+    text-align: center;
+    content: "\2713";
+    z-index: 999;
+    box-shadow: 0 0px 4px 0px #8fff8f;
+}
+.frhd__trisec-post-set label {
+    color: #9a929e;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 20px 35px;
+    font-size: 18px;
+    text-shadow: 0 0 1px #9a929e;
+    transition: all .3s;
+}
+.frhd__trisec-post-set .components-base-control__field {
+    display: inline-flex;
+    border: 7px solid #675f6b;
+    width: fit-content;
+}
+.frhd__trisec-post-set .radio-group {
+    border: solid 3px #675f6b;
+    display: inline-block;
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.frhd__trisec-post-set .components-radio-control__option {
+    margin-bottom: 0;
+}
+
+/* 500px for Example Preview */
+@media (max-width: 500px) {
+    .frhd__trisec-aside {
+        display: none;
+    }
+}

@@ -5,7 +5,7 @@
  * Description: A beautiful post layouts block to showcase your posts in grid and list layout with multiple templates availability.
  * Author: WPQode
  * Author URI: https://www.wpqode.com
- * Version: 5.0.1
+ * Version: 5.1.0
  * License: GPL2+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
@@ -28,7 +28,8 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'POST_BLOCK_VERSION', '5.0.1' );
+define( 'POST_BLOCK_VERSION', '5.1.0' );
+define( 'POST_BLOCK_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * Get Block Posts Attributes.
@@ -138,32 +139,32 @@ function frhd_render_block_core( $attributes ) {
 		switch ( $frhd_post_layout ) {
 
 			case 'grid1':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-1.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-1.php';
 				wp_enqueue_style( 'post-grid-1' );
 				break;
 
 			case 'grid2':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-2.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-2.php';
 				wp_enqueue_style( 'post-grid-2' );
 				break;
 
 			case 'grid3':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-3.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-3.php';
 				wp_enqueue_style( 'post-grid-3' );
 				break;
 
 			case 'grid4':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-4.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-4.php';
 				wp_enqueue_style( 'post-grid-4' );
 				break;
 
 			case 'grid5':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-5.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-5.php';
 				wp_enqueue_style( 'post-grid-5' );
 				break;
 
 			case 'grid6':
-				require plugin_dir_path( __FILE__ ) . 'layouts/post-grid-6.php';
+				require POST_BLOCK_DIR . 'layouts/post-grid-6.php';
 				wp_enqueue_style( 'post-grid-6' );
 				break;
 		}
@@ -207,22 +208,6 @@ function frhd_render_block_core( $attributes ) {
 }
 
 /**
- * Get Block Posts Attributes.
- *
- * @param Mixed $attributes Get attributes from block settings.
- * @return HTML
- */
-function frhd_render_block_catpost( $attributes ) {
-
-	ob_start(); // Turn on output buffering.
-
-	require plugin_dir_path( __FILE__ ) . 'layouts/post-group-1.php';
-
-	return ob_get_clean(); // Turn off ouput buffer and print output.
-
-}
-
-/**
  * Register Block and initial setupment.
  *
  * @return void
@@ -230,13 +215,13 @@ function frhd_render_block_catpost( $attributes ) {
 function frhd_register_block() {
 
 	// Automatically load dependencies and version.
-	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
+	$asset_file = include POST_BLOCK_DIR . 'build/index.asset.php';
 
 	wp_register_script(
 		'post-block-esnext',
 		plugins_url( 'build/index.js', __FILE__ ),
 		$asset_file['dependencies'],
-		filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ),
+		filemtime( POST_BLOCK_DIR . 'build/index.js' ),
 		true
 	);
 
@@ -244,25 +229,25 @@ function frhd_register_block() {
 		'post-block-editor',
 		plugins_url( 'src/editor.css', __FILE__ ),
 		array( 'wp-edit-blocks' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/editor.css' )
+		filemtime( POST_BLOCK_DIR . 'src/editor.css' )
 	);
 
 	wp_register_style(
 		'post-block-css',
 		plugins_url( 'src/style.css', __FILE__ ),
 		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/style.css' )
+		filemtime( POST_BLOCK_DIR . 'src/style.css' )
 	);
 
 	wp_register_script(
 		'post-block-js',
 		plugins_url( 'src/script.js', __FILE__ ),
 		array( 'jquery' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/script.js' ),
+		filemtime( POST_BLOCK_DIR . 'src/script.js' ),
 		true
 	);
 
-	$rbt_args = array(
+	$frhdpb_args = array(
 		'api_version'     => 2,
 		'style'           => 'post-block-css',
 		'editor_style'    => 'post-block-editor',
@@ -274,12 +259,12 @@ function frhd_register_block() {
 	$pb_heart_react     = isset( $pb_plugin_settings['pb_heart_react'] ) ? $pb_plugin_settings['pb_heart_react'] : 0;
 	if ( 1 == $pb_heart_react ) {
 
-		$rbt_args['script'] = 'post-block-js';
+		$frhdpb_args['script'] = 'post-block-js';
 	}
 
 	register_block_type(
 		'gutenberg-post-view/post-block',
-		$rbt_args
+		$frhdpb_args
 	);
 
 	// Starting session to post view counter.
@@ -289,77 +274,49 @@ function frhd_register_block() {
 	}
 
 	/**
-	 * Post Block End here.
-	 * Also Post Group Start from here.
-	 * Rest of the code wraped with a condition.
+	 * Initialize Post Group.
 	 */
-	wp_register_style(
-		'post-group-editor',
-		plugins_url( 'src/block-post-cat/post-group-editor.css', __FILE__ ),
-		array( 'wp-edit-blocks' ),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group-editor.css' )
-	);
-	wp_register_style(
-		'post-group-css',
-		plugins_url( 'src/block-post-cat/post-group.css', __FILE__ ),
-		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . 'src/block-post-cat/post-group.css' )
-	);
+	include_once POST_BLOCK_DIR . 'src/block-post-cat/index.php';
 
 	/**
-	 * Register Block Type : Category Post.
+	 * Initialize Post Trisec.
 	 */
-	$rbtcp_args = array(
-		'api_version'     => 2,
-		'style'           => 'post-group-css',
-		'editor_style'    => 'post-group-editor',
-		'editor_script'   => 'post-block-esnext',
-		'attributes'      => array(
-			'groupImage'       => array(
-				'type'    => 'string',
-				'default' => 'https://via.placeholder.com/300',
-			),
-			'groupImageObj'    => array(
-				'type' => 'object',
-			),
-			'groupImageSize'   => array(
-				'type'    => 'string',
-				'default' => 'full',
-			),
-			'isEqualHeight'    => array(
-				'type'    => 'boolean',
-				'default' => false,
-			),
-			'groupImageHeight' => array(
-				'type'    => 'string',
-				'default' => '300px',
-			),
-			'theCategories'    => array(
-				'type'    => 'array',
-				'default' => null,
-			),
-			'groupTitle'       => array(
-				'type'    => 'string',
-				'default' => 'Group Title',
-			),
-			'postsPerPage'     => array(
-				'type'    => 'string',
-				'default' => '5',
-			),
-			'titleWordCount'   => array(
-				'type'    => 'string',
-				'default' => '3',
-			),
-		),
-		'render_callback' => 'frhd_render_block_catpost',
-	);
+	include_once POST_BLOCK_DIR . 'src/block-post-trisec/index.php';
 
-	register_block_type(
-		'category-post-view/post-group',
-		$rbtcp_args
-	);
 }
 add_action( 'init', 'frhd_register_block' );
+
+/**
+ * Get Block Post Group Attributes.
+ *
+ * @param Mixed $attributes Get attributes from block settings.
+ * @return HTML
+ */
+function frhd_render_block_catpost( $attributes ) {
+
+	ob_start(); // Turn on output buffering.
+
+	require POST_BLOCK_DIR . 'layouts/post-group-1.php';
+
+	return ob_get_clean(); // Turn off ouput buffer and print output.
+
+}
+
+/**
+ * Get Block Post Trisec Attributes.
+ *
+ * @param Mixed $attributes Get attributes from block settings.
+ * @return HTML
+ */
+function frhd_render_block_trisec( $attributes ) {
+
+	ob_start(); // Turn on output buffering.
+
+	require POST_BLOCK_DIR . 'layouts/post-trisec-1.php';
+
+	return ob_get_clean(); // Turn off ouput buffer and print output.
+
+}
 
 /**
  * Set post views count using post meta.
@@ -406,7 +363,7 @@ add_filter( 'wp_head', 'frhd_set_mod_views' );
 /**
  * Calling The Admin Options.
  */
-require_once plugin_dir_path( __FILE__ ) . 'post-block-admin-options.php';
+require_once POST_BLOCK_DIR . 'post-block-admin-options.php';
 
 /**
  * Enqueue styles for layout.

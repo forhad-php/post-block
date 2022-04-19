@@ -1,3 +1,7 @@
+.frhd__post-group-wrapper > * {
+    pointer-events: none;
+}
+
 /* Post Group Visual Styles */
 .frhd__post-group-wrapper h3,
 .frhd__post-group-wrapper p {

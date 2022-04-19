@@ -1,3 +1,6 @@
+.frhd__post-grid-2 .frhd__post-block-article {
+    overflow: visible;
+}
 .frhd__post-grid-2 .frhd__date-wrap {
     position: absolute;
     top: -9px;

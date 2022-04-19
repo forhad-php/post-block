@@ -4,7 +4,7 @@ Donate link: https://forhad.net/donate/
 Tags: gutenberg post blocks, display posts, gutenberg blocks, popular posts, post grid, post grid and filter ultimate, WP Ultimate Post Grid
 Requires at least: 4.5
 Tested up to: 5.9.2
-Stable tag: 5.0.1
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -188,12 +188,13 @@ Our expert team members are available 24/7 to help you out with any issues regar
 
 == Screenshots ==
 
-1. Post Block (Demo 1)
-2. Post Block (Demo 2)
-3. Post Block (Demo 3)
-4. Post Block (Demo 4)
-5. Post Block (Demo 5)
-6. Post Group (Demo 6)
+1. Post Block (Demo Grid 1)
+2. Post Block (Demo Grid 2)
+3. Post Block (Demo Grid 3)
+4. Post Block (Demo Grid 4)
+5. Post Block (Demo Grid 5)
+6. Post Group (Demo 1)
+7. Post Block (Demo Grid 6)
 
 == Changelog ==
 
@@ -207,49 +208,56 @@ Our expert team members are available 24/7 to help you out with any issues regar
 * Fix: Maximum width of the block not working.
 * Fix: Column Gap not saving the value.
 
-= 2.0.0 =
+= 1.3.0 =
 * Add: New style component.
 * Fix: Pagination overflow.
 * Fix: Post meta broken.
 * Fix: Author link not working.
 
-= 2.1.0 =
+= 1.4.0 =
 * Add: Multi level indexing.
 * Add: Typography options.
 * Fix: Post reading time not working.
 * Fix: Author url not working.
 * Fix: Meta prefix color not changing.
 
-= 2.2.1 =
+= 2.0.0 =
 * Add: New Grid Layout.
 * Add: Post ordering.
 
-= 2.3.0 =
+= 2.1.0 =
 * Add: New Grid Layout.
 * Add: Rounded Column Size.
 * Fix: Conflict with multiple blocks (Wordpress 5.9)
 
-= 3.0.0 =
+= 2.2.0 =
 * Add: Post Group Layout.
 * Add: Group Image.
 * Add: Equal Height.
 * Add: Read More Button Custom Text.
 
-= 4.0.0 =
+= 3.0.0 =
 * Add: New Grid Layout.
 
-= 4.1.0 =
+= 3.1.0 =
 * Add: Custom Typography.
 * Fix: Inline meta (Grid 1)
 * Fix: Button color (Grid 5)
 
-= 5.0.0 =
+= 4.0.0 =
 * Add: New Grid Layout (Grid 6).
 * Fix: Pagination Limit.
 * Fix: Pagination Preview-Nex Custom Text.
 * Fix: Pagination current button color not changing.
 * Fix: Bottom not aligned on Grid 2.
 
-= 5.0.1 =
+= 4.0.1 =
 * Fix: Pagination not working on home page.
 * Fix: Feature image gliding.
+* Fix: Top radius not change on grid 5.
+* Fix: Fixed height conflict with grid 5.
+* Fix: Flex conflict on grid 6.
+
+= 5.1.0 =
+* Add: New Post Layout (Post Trisect Block)
+* Fix: Disable anchors as clickable on editor page.
